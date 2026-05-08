@@ -58,8 +58,8 @@ Ask all four questions together in a second `AskUserQuestion` call:
 2. **Does anyone have food allergies, dietary restrictions, or strong dislikes?**
    Options: No major restrictions, One person is vegetarian or vegan, Allergy in the household (nut / dairy / gluten / other), Yes — I'll describe (use Other to type details)
 
-3. **Do you have school-age children who need packed snacks each day?**
-   Options: Yes, No
+3. **Which meals would you like to plan each week?** (multi-select)
+   Options: Breakfast, Lunch, Dinner, School snacks for kids (packed daily)
 
 4. **What grocery stores do you usually shop at?**
    Options: (guide them to use "Other" to type their stores)
@@ -110,7 +110,7 @@ When saving a new recipe, use `others.md` for anything that doesn't clearly belo
 Write both files immediately using the information from Rounds 1 and 2:
 
 - **`family.md`** — one section per person with their name, role, and any restrictions or dislikes mentioned. For likes, add a few sensible suggestions based on the cuisines they chose (you'll refine these over time). Mark children with their approximate age.
-- **`preferences.md`** — location/country, budget (in their currency), stores, cuisine list, meal structure (dinners + snacks if applicable). Add a note about recipe source: "Own recipe collection" if they added recipes, or "AI suggestions" if not.
+- **`preferences.md`** — location/country, budget (in their currency), stores, cuisine list, planned meal types (the full list from Round 2 Q3 — e.g. "Breakfast · Dinner" or "Breakfast · Lunch · Dinner · School snacks"), and school snack flag if applicable. Add a note about recipe source: "Own recipe collection" if they added recipes, or "AI suggestions" if not.
 
 Then tell the user: "Setup complete! Your family profile is saved to `family.md` and `preferences.md` — you can edit these any time to add more detail. Ready to plan your first week — just say 'plan this week' or ask for meal ideas."
 
@@ -164,7 +164,7 @@ It contains: colors, data structures, template example — everything needed to 
 ## Planning Rules
 
 ### Menu
-1. Plan 5–7 dinners per week.
+1. Read `preferences.md` to find which meals are planned (e.g. Breakfast only, Dinner only, Breakfast + Lunch + Dinner, etc.). Plan 5–7 options per week for **each selected meal type**. If no meal types are listed, default to Dinner.
 2. Vary cuisines based on preferences in `preferences.md`.
 3. Check each dish against each person's dislikes (read from `family.md`).
 4. Flag dishes that may conflict with a family member's restrictions.
@@ -172,12 +172,13 @@ It contains: colors, data structures, template example — everything needed to 
    it lives in the fridge and is eaten for lunch across the week.
    Always plan a dinner dish on soup day too, not instead of it.
    Format soup day as: "Mon — soup: [name] + dinner: [name]"
-6. **Every dinner should follow the Harvard Plate principle:**
+6. **Lunch and dinner should follow the Harvard Plate principle:**
    - 1/2 plate = vegetables (non-starchy)
    - 1/4 plate = quality protein (meat, fish, eggs, legumes)
    - 1/4 plate = complex carbohydrates (rice, potato, pasta, bread)
    - Add healthy fat (olive oil, butter, avocado, nuts)
-   The salad assigned to each day serves as the vegetables component.
+   The salad assigned to each day serves as the vegetables component for lunch/dinner.
+   Breakfast does not need to follow Harvard Plate — keep it practical and quick.
 
 ### No-repeat rule (check history.md first)
 Read `history.md` before picking dishes. Do not repeat any main dish that appeared
@@ -189,8 +190,9 @@ After outputting the final plan, update `history.md`:
 Keep the file tidy — it's read every session.
 
 ### Daily salads (variety from salads.md)
-Each dinner day gets a different salad. The salad is the vegetables half of
+Each lunch or dinner day gets a different salad. The salad is the vegetables half of
 the Harvard plate — it's a planned part of each meal, not just a garnish.
+Skip salads on breakfast-only days.
 
 How to select salads:
 1. Use grep to find all `## ` section headers in `salads.md`.
@@ -210,7 +212,7 @@ How to select salads:
    substitutions in `preferences.md`, always use those first.
 
 ### School snacks (if applicable)
-If the family has school-age children (check `family.md`):
+If "School snacks" is listed in the meal structure in `preferences.md` AND the family has school-age children (check `family.md`):
 1. Always include snacks in the weekly plan.
 2. Vary snacks each week — don't repeat the same set. Mix from these categories:
    - Fruit (ripe, easy to eat)
@@ -294,16 +296,36 @@ Wrap the React component in this shell (React + Babel loaded via CDN — no buil
 ### Day accent colours (Mon → Sun)
 `#7eb8a4` · `#c47e3e` · `#9b8fc4` · `#d4894e` · `#7eb8a4` · `#e8c547` · `#6ea8d4`
 
+### Multi-meal days
+When more than one meal type is planned (e.g. Breakfast + Dinner, or Breakfast + Lunch + Dinner),
+use meal-type section dividers to separate each within the same day entry:
+
+```
+ingr: [
+  { sec: "── Breakfast: Avocado Toast ──" },
+  { i: "Sourdough — 2 slices" },
+  { sec: "── Dinner: Chicken Tikka ──" },
+  { i: "Chicken thighs — 500g" },
+  { sec: "── Salad: Greek Salad ──" },
+  { i: "Tomatoes — 2" },
+]
+```
+
+The step counter resets after each `sec` divider. The `title` field should lead with the dinner
+(or most substantial meal) — e.g. `"Avocado Toast + Chicken Tikka"`.
+Harvard plate chips apply to lunch and dinner blocks only; omit them for breakfast.
+
 ### Soup + dinner day
-Ingredients: two blocks separated by `── Soup ──` and `── Dinner ──`.
+Ingredients: two blocks separated by `── Soup ──` and `── Dinner: Name ──`.
 Steps: soup steps first, then dinner steps.
 
-### Each recipe day includes a salad (mandatory)
-Every day **must** have a named salad block. Pattern:
+### Salads (mandatory for lunch and dinner days)
+Every day that includes lunch or dinner **must** have a named salad block. Pattern:
 - Ingredients: add `── Salad: [Name] ──` as a section divider, followed by salad ingredients
 - Steps: append 2–3 salad steps after the main dish steps
 - Plate chip "vegetables ½": reference the salad by name
 - Each day must have a **different** salad
+- Breakfast-only days: no salad needed
 
 ### Recipe steps
 Write plain instruction text — strip any external numbering artifacts from recipe sources.

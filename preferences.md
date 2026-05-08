@@ -27,10 +27,9 @@
 - [e.g. Air fryer, Instant Pot, wok]
 
 ## Meal Structure
-- **Breakfast**: [e.g. toast + eggs, cereal, or skip]
-- **Lunch**: leftovers from previous dinner — no separate planning needed
-- **Dinner**: main meal to plan
-- **School snacks**: [pack for children if applicable]
+<!-- Which meals are planned each week — filled in during onboarding -->
+- **Planned meals**: [e.g. Dinner · Breakfast + Dinner · Breakfast + Lunch + Dinner]
+- **School snacks**: [Yes — packed daily for children / No]
 
 ## Weekly Planning Goals
 - Variety across cuisines

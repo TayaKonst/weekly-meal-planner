@@ -117,8 +117,10 @@ Recipes tab:
 
 - A `{ sec: "── Name ──" }` divider renders as a section header with lines on each side
 - Steps are numbered automatically (1, 2, 3…); counter resets after each `sec`
-- Every day must include a `── Salad: Name ──` section (not `── + on the side ──`)
+- Every day that includes lunch or dinner must include a `── Salad: Name ──` section
 - For soup day: two blocks — `── Soup ──` and `── Dinner: Name ──`
+- For multi-meal days: one block per meal type — e.g. `── Breakfast: Avocado Toast ──`, `── Dinner: Chicken Tikka ──`, `── Salad: Greek Salad ──`
+- Harvard plate chips apply to lunch and dinner only; omit chips for breakfast-only days
 
 ---
 
