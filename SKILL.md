@@ -76,7 +76,7 @@ Options:
 - **Yes — I'll share recipes now**: Ask the user to paste, describe, or upload their recipes. Claude will format them and save them to the appropriate recipe file. They can share as many or as few as they want.
 - **Yes — I'll add recipes later**: Tell the user: "Any time you want to add a recipe, just say 'add this recipe' and share it — I'll save it to your collection. You can also upload a file."
 
-**Regardless of the answer, always create the full recipes/ folder structure:**
+**Regardless of which option the user picks, immediately create the full recipes/ folder structure before asking anything else:**
 ```
 recipes/
 ├── mains.md      — main dishes (empty or populated)
