@@ -72,9 +72,27 @@ After Round 2, ask this question on its own in a third `AskUserQuestion` call:
 **Would you like to add your own recipes to the planner?**
 
 Options:
-- **No thanks — suggest dishes from your knowledge**: No recipe files needed. Claude will suggest meals based on the family's cuisine preferences each week. Fastest way to get started.
-- **Yes — I'll share recipes now**: Ask the user to paste, describe, or upload their recipes. Claude will format them and save them to the `recipes/` folder. They can share as many or as few as they want.
+- **No thanks — suggest dishes from your knowledge**: Claude will suggest meals based on the family's cuisine preferences each week. The recipe files will be created empty and ready for when you want to add your own later.
+- **Yes — I'll share recipes now**: Ask the user to paste, describe, or upload their recipes. Claude will format them and save them to the appropriate recipe file. They can share as many or as few as they want.
 - **Yes — I'll add recipes later**: Tell the user: "Any time you want to add a recipe, just say 'add this recipe' and share it — I'll save it to your collection. You can also upload a file."
+
+**Regardless of the answer, always create the full recipes/ folder structure:**
+```
+recipes/
+├── mains.md      — main dishes (empty or populated)
+├── soups.md      — soups (empty or populated)
+├── salads.md     — salads (empty or populated)
+├── desserts.md   — desserts, baking, drinks (empty or populated)
+└── others.md     — anything that doesn't fit the above (empty or populated)
+```
+
+Each empty file should have a one-line header comment so the user knows what goes there, e.g.:
+```
+# Main Dishes
+<!-- Add your recipes here. Start each one with: ## Recipe Name -->
+```
+
+When saving a new recipe, use `others.md` for anything that doesn't clearly belong in mains, soups, salads, or desserts — snacks, sauces, marinades, breakfast dishes, etc.
 
 **If they choose to share recipes now:**
 1. Ask them to share (paste text, describe dishes, or upload a file — whatever's easiest).
@@ -83,7 +101,7 @@ Options:
    - An ingredients list
    - Numbered steps
    - Optional: time, servings, notes
-3. Save them to `recipes/mains.md` (or `soups.md`, `salads.md` as appropriate).
+3. Save to the appropriate file (`mains.md`, `soups.md`, `salads.md`, or `desserts.md`).
 4. Tag family-contributed recipes with 👨‍👩‍👧 so they get priority in planning.
 5. Confirm: "Added [N] recipes to your collection! These will be prioritized when planning."
 

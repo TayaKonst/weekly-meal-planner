@@ -90,7 +90,18 @@ weekly-meal-planner/
     └── template_schema.md       — data structure reference
 ```
 
-The `recipes/` folder doesn't exist yet — it gets created when you add your first recipe during onboarding or later. If you skip adding recipes, Claude suggests dishes from its own knowledge instead.
+The `recipes/` folder is created automatically during onboarding with these files:
+
+```
+recipes/
+├── mains.md      — main dishes
+├── soups.md      — soups
+├── salads.md     — salads
+├── desserts.md   — desserts, baking, drinks
+└── others.md     — snacks, sauces, breakfast, anything else
+```
+
+Files start empty if you skip adding recipes during onboarding. Claude will suggest dishes from its own knowledge until you fill them in.
 
 `family.md` and `preferences.md` are the only files you ever need to touch — and only if you want to update your info after onboarding.
 
