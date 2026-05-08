@@ -103,7 +103,10 @@ recipes/
 
 Files start empty if you skip adding recipes during onboarding. Claude will suggest dishes from its own knowledge until you fill them in.
 
-`family.md` and `preferences.md` are the only files you ever need to touch — and only if you want to update your info after onboarding.
+You'll interact with three things over time:
+- **`family.md`** — update if preferences change or someone new joins
+- **`preferences.md`** — update budget, stores, or cuisines
+- **`recipes/`** — add new recipes any time by telling Claude "add this recipe"
 
 ---
 
