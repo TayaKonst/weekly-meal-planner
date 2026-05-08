@@ -85,15 +85,12 @@ weekly-meal-planner/
 ├── preferences.md        — budget, stores, cuisines (auto-filled during onboarding)
 ├── history.md            — recent meals (updated automatically each week)
 ├── snack_resources.md    — snack ideas for children
-├── recipes/
-│   ├── mains.md          — main dishes
-│   ├── soups.md          — soups
-│   ├── salads.md         — salads
-│   └── other.md          — baking, desserts, drinks
 └── assets/
     ├── meal_plan_template.jsx   — React component for the HTML output
     └── template_schema.md       — data structure reference
 ```
+
+The `recipes/` folder doesn't exist yet — it gets created when you add your first recipe during onboarding or later. If you skip adding recipes, Claude suggests dishes from its own knowledge instead.
 
 `family.md` and `preferences.md` are the only files you ever need to touch — and only if you want to update your info after onboarding.
 
