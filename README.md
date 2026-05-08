@@ -1,16 +1,16 @@
 # 🍽️ Weekly Meal Planner — Claude Skill
 
-A Claude skill that plans your weekly dinners, builds a shopping list, and delivers everything as a beautiful interactive HTML app — personalized for your family's tastes, dietary restrictions, and budget.
+A Claude skill that plans your weekly meals, builds a shopping list, and delivers everything as a beautiful interactive HTML app — personalized for your family's tastes, dietary restrictions, and budget.
 
 ---
 
 ## What it does
 
-- **Plans 5–7 dinners per week** with variety across cuisines
-- **Generates a shopping list** grouped by store and category
+- **Plans any combination of meals** — breakfast, lunch, dinner, or all three — 5–7 options per meal type per week
+- **Generates a shopping list** grouped by store and category, covering every planned meal
 - **Outputs an interactive HTML app** — tap items off your list, browse recipes day by day
 - **Remembers what you cooked** and avoids repeating dishes in the last 2 weeks
-- **Follows the Harvard Plate** — each meal is balanced with vegetables, protein, carbs, and healthy fat
+- **Follows the Harvard Plate** for lunch and dinner — balanced with vegetables, protein, carbs, and healthy fat
 - **Plans school snacks** for children (optional)
 - **Works with your own recipes** or falls back to Claude's suggestions if you don't have any
 
@@ -42,7 +42,7 @@ The first time you use the skill, Claude will run a short onboarding interview �
 **Round 2 — Your people:**
 - Names/nicknames and roles for each family member
 - Any dietary restrictions, allergies, or strong dislikes
-- School-age children needing packed snacks?
+- Which meals to plan each week: Breakfast / Lunch / Dinner / School snacks (multi-select)
 - Grocery stores you shop at
 
 **Round 3 — Recipes:**
@@ -61,7 +61,7 @@ Just talk to Claude naturally:
 > *"Make me a shopping list"*
 > *"Suggest some dinner ideas"*
 
-Claude will produce an interactive HTML meal plan — open it in your browser for a tap-to-check shopping list and a recipe navigator for each day.
+Claude will produce an interactive HTML meal plan — open it in your browser for a tap-to-check shopping list and a recipe navigator for each day. The plan covers whichever meals you selected during onboarding (e.g. just dinner, or breakfast + dinner, or the full day).
 
 ---
 
@@ -115,10 +115,10 @@ You'll interact with three things over time:
 The weekly plan opens as a self-contained HTML file in your browser:
 
 - **Shopping tab** — grouped by store, tap to check off items, progress bar, budget estimate
-- **Recipes tab** — day-by-day navigator with ingredients, step-by-step method, and Harvard Plate breakdown for each meal
+- **Recipes tab** — day-by-day navigator with ingredients, step-by-step method, and Harvard Plate breakdown for lunch and dinner
 
 ---
 
 ## Customizing
 
-Edit `family.md` any time to update preferences, add a new family member, or change restrictions. Edit `preferences.md` to update your budget, stores, or cuisine preferences. Changes take effect on the next planning session.
+Edit `family.md` any time to update preferences, add a new family member, or change restrictions. Edit `preferences.md` to update your budget, stores, cuisine preferences, or which meals are planned. Changes take effect on the next planning session.
