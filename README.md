@@ -28,7 +28,7 @@ Choose the one you use:
 5. Make sure **weekly-meal-planner** is switched on.
 6. Create a **Project** called "Meal planning" and start your chats there.
 
-**Why a Project?** The app doesn't carry files over from one chat to the next. After setup and after each weekly plan, Claude gives you updated files such as `family.md` and `history.md`. Add them to your Project's files, replacing the old copies, so the next chat knows your family and what you ate.
+**Why a Project?** The app doesn't carry files over from one chat to the next. After each weekly plan, Claude asks whether to save your settings. Choose **Save them** and it gives you files such as `family.md` and `history.md`. Add them to your Project's files, replacing the old copies, so the next chat knows your family and what you ate.
 
 ### Claude Code
 

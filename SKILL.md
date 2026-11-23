@@ -19,10 +19,11 @@ Below, these names always mean the files in the user's data location:
 - **Claude Code:** the folder `meal-planner` in the user's home directory (`~/meal-planner/`).
 - **Claude app (web, desktop, mobile):** files attached to the chat or in the Project's knowledge,
   or a folder the user has connected. Files you create in a chat's own workspace don't carry over
-  to the next chat, so whenever you create or change a data file, give it to the user to download
-  and ask them to add it to their Project, replacing the old copy. Don't say it is saved until they have.
-  Give them only files that are new or changed and have real content. Don't create or give them empty
-  recipe files; create each one when its first recipe is saved.
+  to the next chat. Work on data files in your private working folder, **not** in the folder for
+  files the user can download: anything put there may open in front of the meal plan. Hand them over
+  only as described in Output Format, step 7, or when the user asks. Don't say they are saved until
+  the user has added them to their Project. Don't create or hand over empty recipe files; create each
+  one when its first recipe is saved.
 
 Read `family.md`, `preferences.md` and `history.md` first, every time. If `family.md` or
 `preferences.md` can't be found here, **carry on in this chat**. Never stop and tell the user to go to a
@@ -104,7 +105,7 @@ Before planning, create all of these in the user's data location:
   `<!-- Start each recipe with: ## Recipe Name -->`.
 
 If the user chose to share recipes now, ask for them and save them (see Recipes).
-Then tell the user where their files are, and that they can add favorite recipes any time by sending
+In Claude Code, tell the user where their files are. Everywhere, tell them that they can add favorite recipes any time by sending
 you a link, text, photo or file. Go on with their original request. If they only
 asked for setup, suggest saying "plan this week".
 
@@ -252,12 +253,20 @@ ideas), just answer in chat.
    In the Claude app, copy it to the place for files the user can download.
 4. Replace `"__PLAN_DATA__"` in the copy with this week's data, then check that the placeholder is gone.
 5. Update `history.md`.
-6. Show the plan. In Claude Code, open it: `open` on macOS, `start ""` on Windows (cmd), `xdg-open` on
-   Linux. In the Claude app, give the user the changed data files first (one step), then the plan on its
-   own as the **last** file, so that the plan is what stays open. If you can't create files there, make
-   the plan an HTML artifact instead.
-7. Tell the user first where the plan is, then which data files to keep (if any), the estimated cost against the budget, and anything to
-   double-check (allergen labels, substitutions). Prices are estimates; say so.
+6. **Show the meal plan, and nothing else.** The plan must be what the user sees open.
+   - Claude Code: open it with `open` on macOS, `start ""` on Windows (cmd) or `xdg-open` on Linux.
+   - Claude app: the plan is the **only** file you give the user at this point. Don't give them
+     `family.md`, `preferences.md`, `history.md` or recipe files together with it, before it or after
+     it. If you can't create files, make the plan an HTML artifact.
+   - Start your message with "Your meal plan is ready" and how to open it: in the app, click
+     **Meal plan** to see recipes and the tap-to-check shopping list. Then give the estimated cost
+     against the budget and anything to double-check (allergen labels, substitutions). Prices are
+     estimates; say so.
+7. **Claude app only:** end with one question, with clickable options if you can: "Do you want to save
+   your family's settings for next time?" Save them · Not now. Explain that otherwise the next chat
+   starts from zero. Only after "Save them", give the changed data files that have real content, and
+   ask the user to add them to their Project, replacing old copies. Say that the meal plan is still in
+   the list of files above. After the first time, ask about the files that changed, such as `history.md`.
 
 ### What goes in each day
 
