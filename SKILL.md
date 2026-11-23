@@ -29,12 +29,19 @@ Read `family.md`, `preferences.md` and `history.md` first, every time. If `famil
 Project or another chat:
 
 - Normally, start First-Time Setup right away with question 1.
-- Only if you have reason to think the user already has these files elsewhere (for example, from
-  memory), first ask one question, the same way as in setup: "I can't see your meal planner files
+- Only if you have reason to think the user already has these files elsewhere, first ask one question, the same way as in setup: "I can't see your meal planner files
   here. How do you want to start?" Set up here · I'll attach my files. Then go on with their choice.
   For "attach", wait for the files. If they don't come, offer to set up here.
 
-What you remember about the user may shorten setup, but confirm allergies with question 2 anyway.
+### Only use what the user gave the planner
+
+Plan only from the user's data files and what they say in this chat. Memory, other chats, other
+Projects and other skills are **not** sources for setup or planning: don't take the household, names,
+country, stores, diets, fasting days, likes, dislikes or favorite dishes from them, and don't skip a
+setup question because of them. Every restriction in the plan must be traceable to a file or an answer.
+
+One exception, for safety: if memory suggests an allergy that the user didn't mention, don't add it
+silently. Ask about it as a separate question, and follow the answer.
 
 ---
 
@@ -57,7 +64,7 @@ together.
 - If the tool fails, closes, or returns no answer, ask the same question again in chat with numbered
   options. If the user chose to skip it, go on with a sensible default, but a skipped allergy question
   isn't a "no": ask it again in chat.
-- Skip anything the user has already told you. If an answer needs details, ask for them next, also as
+- Skip only what the user has already said in this chat or their files. If an answer needs details, ask for them next, also as
   one question. Keep questions short.
 
 | # | Question | Options |
@@ -79,7 +86,7 @@ together.
 | 9 | What food do you enjoy? (multi-select) | Italian / Mediterranean · Asian · Comfort food · Mexican / Middle Eastern |
 | 10 | Do you want to use your own recipes? | Use your ideas · Share recipes now · Add them later |
 
-Use "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
+Use neutral names: "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
 never guess an allergen: if 2a is still unclear, ask again before planning anything.
 
 ### Step 2 — Write the files
