@@ -23,8 +23,8 @@ Choose the one you use:
 
 1. Download **[weekly-meal-planner.zip](https://github.com/TayaKonst/weekly-meal-planner/releases/latest/download/weekly-meal-planner.zip)**. Don't unzip it. (If your Mac unzips it automatically, right-click the folder and choose **Compress**.)
 2. In Claude, open **Settings → Capabilities** and turn on **Code execution and file creation**. It may be called **Create and edit files**.
-3. Open **[Customize → Skills](https://claude.ai/customize/skills)**.
-4. Click **+**, then **Create skill**, then **Upload a skill**, and choose the zip file.
+3. Click **Plugins**, then open the **Skills** tab.
+4. Add a new skill there: choose the option to upload one, and select the zip file.
 5. Make sure **weekly-meal-planner** is switched on.
 6. Create a **Project** called "Meal planning" and start your chats there.
 
@@ -91,7 +91,7 @@ In Claude Code, they are in the `meal-planner` folder in your home folder. In th
 
 ## Update
 
-- **Claude app:** delete the old skill in Customize → Skills, then download and upload the new zip.
+- **Claude app:** delete the old skill in **Plugins → Skills**, then download and upload the new zip.
 - **Claude Code:** run `git -C ~/.claude/skills/weekly-meal-planner pull` (in PowerShell, `git -C "$HOME\.claude\skills\weekly-meal-planner" pull`), or ask Claude to update the skill.
 
 ## Problems?
