@@ -21,9 +21,20 @@ Below, these names always mean the files in the user's data location:
   or a folder the user has connected. Files you create in a chat's own workspace don't carry over
   to the next chat, so whenever you create or change a data file, give it to the user to download
   and ask them to add it to their Project, replacing the old copy. Don't say it is saved until they have.
+  Give them only files that are new or changed and have real content. Don't create or give them empty
+  recipe files; create each one when its first recipe is saved.
 
 Read `family.md`, `preferences.md` and `history.md` first, every time. If `family.md` or
-`preferences.md` is missing, run First-Time Setup.
+`preferences.md` can't be found here, **carry on in this chat**. Never stop and tell the user to go to a
+Project or another chat:
+
+- Normally, start First-Time Setup right away with question 1.
+- Only if you have reason to think the user already has these files elsewhere (for example, from
+  memory), first ask one question, the same way as in setup: "I can't see your meal planner files
+  here. How do you want to start?" Set up here · I'll attach my files. Then go on with their choice.
+  For "attach", wait for the files. If they don't come, offer to set up here.
+
+What you remember about the user may shorten setup, but confirm allergies with question 2 anyway.
 
 ---
 
@@ -78,7 +89,7 @@ Before planning, create all of these in the user's data location:
 - `family.md` and `preferences.md`, following `templates/family.md` and `templates/preferences.md`.
   Use only what the user told you. Remove unused sections and all placeholder text.
 - `history.md`, copied from `templates/history.md`.
-- `recipes/mains.md`, `soups.md`, `salads.md`, `desserts.md` (desserts, baking, drinks) and
+- Except in the Claude app: `recipes/mains.md`, `soups.md`, `salads.md`, `desserts.md` (desserts, baking, drinks) and
   `others.md` (everything else), each with a heading and the line
   `<!-- Start each recipe with: ## Recipe Name -->`.
 
@@ -230,10 +241,12 @@ ideas), just answer in chat.
    location, using the first day of the plan as the date. Copy it with a shell command; don't retype it.
    In the Claude app, copy it to the place for files the user can download.
 4. Replace `"__PLAN_DATA__"` in the copy with this week's data, then check that the placeholder is gone.
-5. Open it: `open` on macOS, `start ""` on Windows (cmd), `xdg-open` on Linux. In the Claude app, give
-   the user the file. If you can't create files there, make the app an HTML artifact instead.
-6. Update `history.md`.
-7. Tell the user where the file is, the estimated cost against the budget, and anything to
+5. Update `history.md`.
+6. Show the plan. In Claude Code, open it: `open` on macOS, `start ""` on Windows (cmd), `xdg-open` on
+   Linux. In the Claude app, give the user the changed data files first (one step), then the plan on its
+   own as the **last** file, so that the plan is what stays open. If you can't create files there, make
+   the plan an HTML artifact instead.
+7. Tell the user first where the plan is, then which data files to keep (if any), the estimated cost against the budget, and anything to
    double-check (allergen labels, substitutions). Prices are estimates; say so.
 
 ### What goes in each day
