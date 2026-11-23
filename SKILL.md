@@ -40,6 +40,12 @@ together.
   your tool doesn't, make the last option "Something else (I'll type it)".
 - If there is no such tool, ask in chat: one question per message, with numbered options and
   "or write your own".
+- **Never announce a question without asking it.** Don't write an introduction such as "I need a few
+  answers first" and stop. Ask in the same turn, and until setup is finished end every turn with a
+  question the user can see.
+- If the tool fails, closes, or returns no answer, ask the same question again in chat with numbered
+  options. If the user chose to skip it, go on with a sensible default, but a skipped allergy question
+  isn't a "no": ask it again in chat.
 - Skip anything the user has already told you. If an answer needs details, ask for them next, also as
   one question. Keep questions short.
 
