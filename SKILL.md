@@ -98,7 +98,8 @@ never guess an allergen: if 2a is still unclear, ask again before planning anyth
 Before planning, create all of these in the user's data location:
 
 - `family.md` and `preferences.md`, following `templates/family.md` and `templates/preferences.md`.
-  Use only what the user told you. Remove unused sections and all placeholder text.
+  Use only what the user told you. Remove unused sections, all placeholder text in
+  brackets, and any HTML comments.
 - `history.md`, copied from `templates/history.md`.
 - Except in the Claude app: `recipes/mains.md`, `soups.md`, `salads.md`, `desserts.md` (desserts, baking, drinks) and
   `others.md` (everything else), each with a heading and the line
@@ -187,7 +188,7 @@ If a child takes lunch to school the next day:
 
 ### When the user rejects a dish
 Replace it right away, in the plan file and shopping list too. Log it with the date and reason
-("didn't eat well last time", "not this week") under `## Rejected dishes` in `history.md`, and don't
+("didn't eat well last time", "not this week") as `date — dish — reason` under `## Rejected dishes` in `history.md`, and don't
 suggest it again soon. Keep this section when you remove old weeks; drop entries that no longer apply.
 
 ### No-repeat rule (check history.md first)
@@ -195,7 +196,8 @@ Read `history.md` before picking dishes. Do not repeat any main dish that appear
 in the last 2 weeks. Soups can repeat if it has been more than 1 week.
 Also avoid ingredients the family has eaten a lot recently (e.g. chicken four times last week).
 After outputting the final plan, update `history.md`:
-- Add a section for this week above the older weeks
+- Add a section for this week above the older weeks, below `## Rejected dishes`:
+  `## Week of 2026-11-23`, then one bold line per type (`**Dinners:**`, `**Salads:**`, …)
 - List every planned dish by meal type, plus the soup, salads and snacks
 - Remove the oldest entry if there are more than 4 weeks recorded
 Keep the file tidy — it's read every session.
@@ -262,11 +264,16 @@ ideas), just answer in chat.
      **Meal plan** to see recipes and the tap-to-check shopping list. Then give the estimated cost
      against the budget and anything to double-check (allergen labels, substitutions). Prices are
      estimates; say so.
-7. **Claude app only:** end with one question, with clickable options if you can: "Do you want to save
-   your family's settings for next time?" Save them · Not now. Explain that otherwise the next chat
-   starts from zero. Only after "Save them", give the changed data files that have real content, and
-   ask the user to add them to their Project, replacing old copies. Say that the meal plan is still in
-   the list of files above. After the first time, ask about the files that changed, such as `history.md`.
+7. **Claude app only: end your turn right there.** The last lines of the message offer, in plain text:
+   "To keep your family's settings for next time, reply **Save my settings**. Without them, the next
+   chat starts from zero." Don't use the clickable question tool for this: its answer continues the
+   same turn, and the files would then open in place of the plan. After giving the plan, make no more
+   tool calls in that turn.
+
+   Only in a later turn, when the user asks to save, give the changed data files that have real
+   content. Ask the user to add them to their Project, replacing old copies, and say that the meal plan
+   is still in the earlier message. After the first time, offer only the files that changed, such as
+   `history.md`.
 
 ### What goes in each day
 

@@ -1,7 +1,5 @@
 # Family Food Preferences
 
-<!-- Template. Claude fills this in during setup. One section per person. -->
-
 ## Shared Favorites (everyone likes)
 - [Dishes everyone likes]
 
