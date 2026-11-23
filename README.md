@@ -54,7 +54,7 @@ If Claude Code was already open, run `/reload-skills` or restart it.
 
 ## First use
 
-Say **"Plan meals for this week"**. The first time, Claude asks who you cook for, about allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Then it makes your first plan.
+Say **"Plan meals for this week"**. The first time, Claude asks short questions one at a time (10 to 16, depending on your answers): who you cook for, allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Tap an answer or type your own. Then it makes your first plan.
 
 If Claude answers without using the skill, say **"Use the weekly-meal-planner skill"**. In Claude Code you can also type `/weekly-meal-planner`.
 

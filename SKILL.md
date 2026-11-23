@@ -29,28 +29,43 @@ Read `family.md`, `preferences.md` and `history.md` first, every time. If `famil
 
 ## First-Time Setup
 
-### Step 1 — Open questions
+### Step 1 — Ask one question at a time
 
-Ask these in one ordinary chat message, so the user can type freely. Say that short answers are fine.
+Ask each question separately, wait for the answer, then ask the next. Never send several questions
+together.
 
-1. Who are you cooking for? (names or nicknames, and children's ages) Do any children take snacks or a
-   packed lunch to school, and does the school have food rules, such as nut-free?
-2. Does anyone have allergies, dietary restrictions, fasting days, or strong dislikes?
-3. What country are you in, and which stores do you shop at?
-4. What's your grocery budget, per week or per month, and in what currency?
+- Use the tool that shows clickable options (`AskUserQuestion` in Claude Code, or its equivalent in the
+  Claude app), with **one question per call** and 2–4 options.
+- The user must always be able to write their own answer. `AskUserQuestion` adds "Other" by itself. If
+  your tool doesn't, make the last option "Something else (I'll type it)".
+- If there is no such tool, ask in chat: one question per message, with numbered options and
+  "or write your own".
+- Skip anything the user has already told you. If an answer needs details, ask for them next, also as
+  one question. Keep questions short.
 
-If the answer about allergies is missing or unclear, ask again before planning anything.
+| # | Question | Options |
+|---|---|---|
+| 1 | Who are you cooking for? | Just me · Me and my partner · Family with children |
+| 1a | *With children:* How many adults and children? | 2 adults + 1 child · 2 adults + 2 children · 2 adults + 3 children · 1 adult + 1 child |
+| 1b | *With children:* How old are they? (multi-select) | Under 3 · 3–5 · 6–12 · 13 or older |
+| 1c | *School age:* Do they take food to school? | Snacks · Packed lunch · Both · No |
+| 1d | *Takes food to school:* Does the school have food rules? | No rules · Nut-free · Not sure |
+| 2 | Any food allergies? (multi-select) | None · Peanuts or tree nuts · Milk or eggs · Gluten, fish or other |
+| 2a | *Any allergy:* Who has it, and to what exactly? | Suggest likely answers from 1 and 2 |
+| 3 | Any special diet? (multi-select) | None · Vegetarian or vegan · Halal or kosher · Fasting days |
+| 3a | *Any diet:* Who follows it, and how? | Suggest likely answers |
+| 4 | Anything someone really dislikes? (multi-select) | Nothing · Fish or seafood · Mushrooms · Spicy food |
+| 5 | Which country are you in? | United States · United Kingdom · Canada · Australia |
+| 6 | Where do you shop? (multi-select) | 3–4 popular grocery stores in that country |
+| 7 | What's your weekly grocery budget? | 3 amounts in local currency that suit the household · No fixed budget |
+| 8 | Which meals should I plan? (multi-select) | Breakfast · Lunch · Dinner |
+| 9 | What food do you enjoy? (multi-select) | Italian / Mediterranean · Asian · Comfort food · Mexican / Middle Eastern |
+| 10 | Do you want to use your own recipes? | Use your ideas · Share recipes now · Add them later |
 
-### Step 2 — Choices
+Use "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
+never guess an allergen: if 2a is still unclear, ask again before planning anything.
 
-Use `AskUserQuestion` if it is available; otherwise ask in chat. All in one call:
-
-1. **Which meals should I plan?** (multi-select) Breakfast · Lunch · Dinner · School snacks
-2. **Which food do you enjoy?** (multi-select) Italian / Mediterranean · Asian · Comfort food ·
-   Mexican / Middle Eastern
-3. **Do you want to use your own recipes?** Use your ideas · Share recipes now · Add them later
-
-### Step 3 — Write the files
+### Step 2 — Write the files
 
 Before planning, create all of these in the user's data location:
 
@@ -125,6 +140,8 @@ plan from your own knowledge.
 
 ### Use what's in the fridge
 1. Before planning a week, ask what is already in the fridge and pantry, unless the user has said.
+   Ask it on its own, the same way as in setup: Nothing special · Pantry basics (rice, pasta, oil,
+   spices) · I'll list what I have.
    Use it first (e.g. a cauliflower becomes a side that same day), and leave it off the shopping list.
 2. If the user has a fixed amount of an ingredient, check that it is enough and say how much more to buy.
    For meat, allow about 150 g (5 oz) per adult at dinner, less for a child, and about 100 g (3.5 oz)
@@ -196,7 +213,7 @@ If "School snacks" is listed in the meal structure in `preferences.md` AND the f
 Deliver a weekly plan as the interactive HTML app. For a quick question (one recipe, a few dinner
 ideas), just answer in chat.
 
-1. **Fit the budget before building the page.** The weekly limit is the weekly budget, or the monthly
+1. **Fit the budget before building the page**, unless there is no fixed budget. The weekly limit is the weekly budget, or the monthly
    budget ÷ 4.3. Add up the whole shopping list, pantry staples included. While the total is over the
    limit, make it cheaper and add it up again: swap expensive dishes (salmon, shrimp, beef) for eggs,
    beans, tofu or chicken, reuse the same ingredients across days, and drop sauces, cheeses and spices
