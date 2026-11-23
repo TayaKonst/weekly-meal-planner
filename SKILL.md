@@ -33,15 +33,18 @@ Project or another chat:
   here. How do you want to start?" Set up here · I'll attach my files. Then go on with their choice.
   For "attach", wait for the files. If they don't come, offer to set up here.
 
-### Only use what the user gave the planner
+### What you remember about the user
 
-Plan only from the user's data files and what they say in this chat. Memory, other chats, other
-Projects and other skills are **not** sources for setup or planning: don't take the household, names,
-country, stores, diets, fasting days, likes, dislikes or favorite dishes from them, and don't skip a
-setup question because of them. Every restriction in the plan must be traceable to a file or an answer.
+Memory from other chats may shorten setup, but never use it silently. If it has anything useful for
+meal planning, make this the first setup question: list what you remember in a few short lines, then ask
+"Is this right?" Yes, use it · Change something · Start from scratch.
 
-One exception, for safety: if memory suggests an allergy that the user didn't mention, don't add it
-silently. Ask about it as a separate question, and follow the answer.
+- **Yes:** skip the questions it answers, and write those facts to the data files.
+- **Change something:** ask what to change, then treat the corrected list as confirmed.
+- **Start from scratch:** use none of it, and ask every question.
+
+Always ask question 2 (allergies) as well, even if memory already covers it. Anything from memory that
+wasn't in the list doesn't go into the plan. Show the list in chat if it is too long for the question.
 
 ---
 
@@ -64,7 +67,7 @@ together.
 - If the tool fails, closes, or returns no answer, ask the same question again in chat with numbered
   options. If the user chose to skip it, go on with a sensible default, but a skipped allergy question
   isn't a "no": ask it again in chat.
-- Skip only what the user has already said in this chat or their files. If an answer needs details, ask for them next, also as
+- Skip anything the user has already told you or has confirmed from memory. If an answer needs details, ask for them next, also as
   one question. Keep questions short.
 
 | # | Question | Options |
@@ -86,7 +89,7 @@ together.
 | 9 | What food do you enjoy? (multi-select) | Italian / Mediterranean · Asian · Comfort food · Mexican / Middle Eastern |
 | 10 | Do you want to use your own recipes? | Use your ideas · Share recipes now · Add them later |
 
-Use neutral names: "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
+Use "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
 never guess an allergen: if 2a is still unclear, ask again before planning anything.
 
 ### Step 2 — Write the files
