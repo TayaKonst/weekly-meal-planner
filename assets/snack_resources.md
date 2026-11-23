@@ -1,15 +1,6 @@
 # School Snack Resources
 
-<!-- 
-  Optional file — only needed if you have school-age children.
-  Fill in with snack ideas that work for your child.
--->
-
-## Current Snacks
-- [List what your child currently brings to school]
-
-## Goal
-Gradually replace processed snacks with healthier homemade alternatives.
+Ideas for children's school snacks. Check family.md and the school's own rules first.
 
 ## Healthy Snack Ideas by Category
 

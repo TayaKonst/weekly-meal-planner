@@ -1,124 +1,94 @@
-# 🍽️ Weekly Meal Planner — Claude Skill
+# 🍽️ Weekly Meal Planner — a skill for Claude
 
-A Claude skill that plans your weekly meals, builds a shopping list, and delivers everything as a beautiful interactive HTML app — personalized for your family's tastes, dietary restrictions, and budget.
+Tell Claude who you cook for, and it plans your week: meals that suit everyone, recipes, and a shopping list for your stores and budget. You get it all as an interactive page with a tap-to-check shopping list.
 
----
+- Plans any mix of breakfast, lunch, dinner, and school snacks
+- Takes allergies, diets, and dislikes into account
+- Builds balanced lunches and dinners using the Harvard Plate
+- Uses up what's already in your fridge
+- Avoids repeating main dishes from the last two weeks, and remembers dishes you turned down
+- Plans extra portions for school lunches
+- Uses your own recipes, Claude's ideas, or both
 
-## What it does
+> Claude can make mistakes. If someone has a food allergy, check every recipe and label yourself.
 
-- **Plans any combination of meals** — breakfast, lunch, dinner, or all three — 5–7 options per meal type per week
-- **Generates a shopping list** grouped by store and category, covering every planned meal
-- **Outputs an interactive HTML app** — tap items off your list, browse recipes day by day
-- **Remembers what you cooked** and avoids repeating dishes in the last 2 weeks
-- **Follows the Harvard Plate** for lunch and dinner — balanced with vegetables, protein, carbs, and healthy fat
-- **Plans school snacks** for children (optional)
-- **Works with your own recipes** or falls back to Claude's suggestions if you don't have any
+## Install
 
----
+Choose the one you use:
 
-## How to install
+- **[Claude app](#claude-app)**: claude.ai in a browser, or the Claude desktop app. Nothing technical needed.
+- **[Claude Code](#claude-code)**: remembers your family and past meals automatically.
 
-This is a skill for [Claude Code](https://claude.ai/code). To install it:
+### Claude app
 
-1. Download the `.skill` file from the [Releases](../../releases) page
-2. In Claude Code, run:
-   ```
-   /install-skill weekly-meal-planner.skill
-   ```
-3. That's it — Claude will detect the skill automatically next time you ask about meals
+1. Download **[weekly-meal-planner.zip](https://github.com/TayaKonst/weekly-meal-planner/releases/latest/download/weekly-meal-planner.zip)**. Don't unzip it. (If your Mac unzips it automatically, right-click the folder and choose **Compress**.)
+2. In Claude, open **Settings → Capabilities** and turn on **Code execution and file creation**. It may be called **Create and edit files**.
+3. Open **[Customize → Skills](https://claude.ai/customize/skills)**.
+4. Click **+**, then **Create skill**, then **Upload a skill**, and choose the zip file.
+5. Make sure **weekly-meal-planner** is switched on.
+6. Create a **Project** called "Meal planning" and start your chats there.
 
----
+**Why a Project?** The app doesn't carry files over from one chat to the next. After setup and after each weekly plan, Claude gives you updated files such as `family.md` and `history.md`. Add them to your Project's files, replacing the old copies, so the next chat knows your family and what you ate.
 
-## First-time setup
+### Claude Code
 
-The first time you use the skill, Claude will run a short onboarding interview — no manual file editing needed.
+The easiest way is to ask Claude Code:
 
-**Round 1 — Household basics:**
-- How many people are you cooking for?
-- What country or region are you in?
-- Monthly grocery budget
-- Favourite cuisines
+> Install the skill from https://github.com/TayaKonst/weekly-meal-planner into my personal skills folder, as `weekly-meal-planner`.
 
-**Round 2 — Your people:**
-- Names/nicknames and roles for each family member
-- Any dietary restrictions, allergies, or strong dislikes
-- Which meals to plan each week: Breakfast / Lunch / Dinner / School snacks (multi-select)
-- Grocery stores you shop at
+Or do it yourself. This needs [Git](https://git-scm.com/downloads).
 
-**Round 3 — Recipes:**
-- Use Claude's suggestions, add your own recipes now, or add them later
+**Mac or Linux**, in Terminal:
 
-After answering, Claude writes your `family.md` and `preferences.md` automatically and is ready to plan.
-
----
-
-## Using the skill
-
-Just talk to Claude naturally:
-
-> *"Plan meals for this week"*
-> *"What should I cook this week?"*
-> *"Make me a shopping list"*
-> *"Suggest some dinner ideas"*
-
-Claude will produce an interactive HTML meal plan — open it in your browser for a tap-to-check shopping list and a recipe navigator for each day. The plan covers whichever meals you selected during onboarding (e.g. just dinner, or breakfast + dinner, or the full day).
-
----
-
-## Adding your own recipes
-
-At any point you can tell Claude:
-
-> *"Add this recipe: [paste or describe it]"*
-> *"I have a recipe file I want to add"* (then upload it)
-
-Claude will format it and save it to your `recipes/` folder. Your own recipes get priority over AI suggestions when planning.
-
----
-
-## File structure
-
-```
-weekly-meal-planner/
-├── SKILL.md              — skill instructions (don't edit)
-├── family.md             — your family's preferences (auto-filled during onboarding)
-├── preferences.md        — budget, stores, cuisines (auto-filled during onboarding)
-├── history.md            — recent meals (updated automatically each week)
-├── snack_resources.md    — snack ideas for children
-└── assets/
-    ├── meal_plan_template.jsx   — React component for the HTML output
-    └── template_schema.md       — data structure reference
+```bash
+git clone https://github.com/TayaKonst/weekly-meal-planner.git ~/.claude/skills/weekly-meal-planner
 ```
 
-The `recipes/` folder is created automatically during onboarding with these files:
+**Windows**, in PowerShell:
 
-```
-recipes/
-├── mains.md      — main dishes
-├── soups.md      — soups
-├── salads.md     — salads
-├── desserts.md   — desserts, baking, drinks
-└── others.md     — snacks, sauces, breakfast, anything else
+```powershell
+git clone https://github.com/TayaKonst/weekly-meal-planner.git "$HOME\.claude\skills\weekly-meal-planner"
 ```
 
-Files start empty if you skip adding recipes during onboarding. Claude will suggest dishes from its own knowledge until you fill them in.
+If Claude Code was already open, run `/reload-skills` or restart it.
 
-You'll interact with three things over time:
-- **`family.md`** — update if preferences change or someone new joins
-- **`preferences.md`** — update budget, stores, or cuisines
-- **`recipes/`** — add new recipes any time by telling Claude "add this recipe"
+## First use
 
----
+Say **"Plan meals for this week"**. The first time, Claude asks who you cook for, about allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Then it makes your first plan.
 
-## Output preview
+If Claude answers without using the skill, say **"Use the weekly-meal-planner skill"**. In Claude Code you can also type `/weekly-meal-planner`.
 
-The weekly plan opens as a self-contained HTML file in your browser:
+## Things to say
 
-- **Shopping tab** — grouped by store, tap to check off items, progress bar, budget estimate
-- **Recipes tab** — day-by-day navigator with ingredients, step-by-step method, and Harvard Plate breakdown for lunch and dinner
+- "Plan dinners for next week, 30 minutes max"
+- "Swap Wednesday for something vegetarian"
+- "What can I cook with chicken and zucchini?"
+- "Add this recipe to my collection: …" (paste it or share a link)
+- "I have 400 g of chicken. Is that enough for dinner and a packed lunch?"
+- "We have a new budget: $120 a week"
 
----
+## Your files
 
-## Customizing
+| File | What's in it |
+|---|---|
+| `family.md` | People, allergies, likes and dislikes |
+| `preferences.md` | Budget, stores, cuisines, which meals to plan |
+| `history.md` | The last four weeks of meals |
+| `recipes/` | Your own recipes |
+| `plans/` | Your weekly plans. Open them in any browser |
 
-Edit `family.md` any time to update preferences, add a new family member, or change restrictions. Edit `preferences.md` to update your budget, stores, cuisine preferences, or which meals are planned. Changes take effect on the next planning session.
+In Claude Code, they are in the `meal-planner` folder in your home folder. In the Claude app, they are in your Project. You can edit them or ask Claude to. They are not part of the skill, so updating it doesn't touch them.
+
+## Update
+
+- **Claude app:** delete the old skill in Customize → Skills, then download and upload the new zip.
+- **Claude Code:** run `git -C ~/.claude/skills/weekly-meal-planner pull` (in PowerShell, `git -C "$HOME\.claude\skills\weekly-meal-planner" pull`), or ask Claude to update the skill.
+
+## Problems?
+
+| Problem | Try this |
+|---|---|
+| Claude doesn't use the skill | Check it's switched on (app) or that `~/.claude/skills/weekly-meal-planner/SKILL.md` exists (Claude Code), then start a new chat |
+| The app rejects the zip | Use the link above. GitHub's green **Code → Download ZIP** button gives a differently named folder, which may be rejected |
+| Claude asks setup questions again (app) | Start the chat inside your Project and check that `family.md` and `preferences.md` are in its files |
+| Checkmarks disappear | Open the plan in your browser. They are saved per browser, on that device |

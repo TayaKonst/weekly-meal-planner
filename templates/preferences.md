@@ -1,12 +1,12 @@
 # Meal Planning Preferences
 
-<!-- Replace all values below with your own. -->
+<!-- Template. Claude fills this in during setup. -->
 
 ## Country / Region
 - [e.g. United States, Germany, Japan, Australia] — helps suggest locally available ingredients and substitutions
 
 ## Budget
-- Groceries: [currency + amount]/month  (e.g. $400 USD/month, €300/month, ¥50,000/month)
+- Groceries: [currency + amount]/[week or month]  (e.g. $400 USD/month, €300/month, ¥50,000/month)
 - Flag if approaching or exceeding limit
 
 ## Grocery Stores
@@ -23,13 +23,17 @@
 
 ## Cooking Equipment
 <!-- List any special equipment you have -->
-- Oven
 - [e.g. Air fryer, Instant Pot, wok]
 
 ## Meal Structure
 <!-- Which meals are planned each week — filled in during onboarding -->
 - **Planned meals**: [e.g. Dinner · Breakfast + Dinner · Breakfast + Lunch + Dinner]
 - **School snacks**: [Yes — packed daily for children / No]
+- **Packed lunches**: [who and which days / No]
+- **School food rules**: [e.g. nut-free / None]
+
+## Units
+- [Metric (g, °C) / US (cups, °F)]
 
 ## Weekly Planning Goals
 - Variety across cuisines
