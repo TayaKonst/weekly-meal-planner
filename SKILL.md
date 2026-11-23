@@ -62,7 +62,8 @@ Before planning, create all of these in the user's data location:
   `<!-- Start each recipe with: ## Recipe Name -->`.
 
 If the user chose to share recipes now, ask for them and save them (see Recipes).
-Then tell the user where their files are, and go on with their original request. If they only
+Then tell the user where their files are, and that they can add favorite recipes any time by sending
+you a link, text, photo or file. Go on with their original request. If they only
 asked for setup, suggest saying "plan this week".
 
 ---
@@ -71,7 +72,14 @@ asked for setup, suggest saying "plan this week".
 
 To save a recipe, add it to the matching file in `recipes/` as `## Recipe Name 👨‍👩‍👧`, followed by
 ingredients, numbered steps, and time, servings and notes if known. Note who it suits.
-Recipes marked 👨‍👩‍👧 are family favorites and come first when planning.
+The user can give you recipes as pasted text, a link, a photo, a file, or a description, one or many
+at a time. "Save this to our favorites" means the same. If a recipe with that name is already saved,
+ask before replacing it. After saving, say which recipe went into which file, and mention any
+ingredient that conflicts with someone's allergy or restriction.
+
+Every recipe in `recipes/` was chosen by the user, so it comes before your own ideas when planning.
+Users may also add recipes or whole files there by hand: use them even without the 👨‍👩‍👧 mark or
+the usual format.
 
 **From a link:** fetch the page, translate it if needed, convert to the units in `preferences.md`
 (metric, e.g. grams and °C, unless the user prefers US units), and rewrite the steps in your own words.

@@ -8,7 +8,7 @@ Tell Claude who you cook for, and it plans your week: meals that suit everyone, 
 - Uses up what's already in your fridge
 - Avoids repeating main dishes from the last two weeks, and remembers dishes you turned down
 - Plans extra portions for school lunches
-- Uses your own recipes, Claude's ideas, or both
+- Uses your own favorite recipes, Claude's ideas, or both. [Add recipes](#add-your-own-recipes) any time
 
 > Claude can make mistakes. If someone has a food allergy, check every recipe and label yourself.
 
@@ -63,9 +63,19 @@ If Claude answers without using the skill, say **"Use the weekly-meal-planner sk
 - "Plan dinners for next week, 30 minutes max"
 - "Swap Wednesday for something vegetarian"
 - "What can I cook with chicken and zucchini?"
-- "Add this recipe to my collection: …" (paste it or share a link)
 - "I have 400 g of chicken. Is that enough for dinner and a packed lunch?"
 - "We have a new budget: $120 a week"
+
+## Add your own recipes
+
+Just ask Claude. Your recipes are used before Claude's own ideas when it plans your week.
+
+- **Send a link:** "Save this to our favorite recipes: https://…" Claude reads the page, rewrites the recipe, and keeps the link. If it can't open the page, paste the text instead.
+- **Paste or describe it:** "Add this recipe: grandma's pancakes, 2 eggs, 300 ml milk…"
+- **Upload it:** attach a photo of a cookbook page, a PDF, or a document and say "Add these recipes to my collection". Several at once is fine.
+- **Add it yourself:** open a file in your `recipes` folder, such as `mains.md`, in any text editor. Start each recipe with a line like `## Grandma's Pancakes`, with the ingredients and steps below it.
+
+In the Claude app, Claude gives you the updated recipe file. Add it to your Project's files, replacing the old copy, or the recipe won't be there in your next chat.
 
 ## Your files
 
