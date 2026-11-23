@@ -1,15 +1,9 @@
 # Family Food Preferences
 
-<!-- 
-  Replace all placeholder content below with your actual family's information.
-  Add or remove family members as needed.
--->
+<!-- Template. Claude fills this in during setup. One section per person. -->
 
 ## Shared Favorites (everyone likes)
-- Pasta
-- Roasted chicken
-- Rice dishes
-- Soup
+- [Dishes everyone likes]
 
 ---
 
@@ -21,8 +15,11 @@
 ### Dislikes / avoid
 - [Add anything to avoid]
 
-### Dietary restrictions
+### Allergies and dietary restrictions
 - None / [e.g. lactose intolerant, vegetarian, gluten-free]
+
+### Fasting days — optional
+- [which days, and what is eaten]
 
 ---
 
@@ -34,7 +31,7 @@
 ### Dislikes / avoid
 - [Add anything to avoid — e.g. "spicy food", "fish", "meat on the bone"]
 
-### Dietary restrictions
+### Allergies and dietary restrictions
 - None / [e.g. no pork, no shellfish]
 
 ---
@@ -47,12 +44,14 @@
 ### Dislikes / avoid
 - [e.g. "anything green", "mushrooms", "spicy food"]
 
+### Allergies and dietary restrictions
+- None / [e.g. nut allergy]
+
 ### School snacks
 - [List what they currently bring to school, e.g. yogurt, fruit, crackers]
 
 ---
 
 ## Meal Planning Notes
-- **Lunch** = leftovers from dinner — no separate cooking needed
-- **Focus on dinners** as the main meal to plan
+- [e.g. "lunch is leftovers from dinner"]
 - [Add any other household meal patterns here]

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly Meal Plan</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: #f5f0e8; color: #2c2416; font-family: Georgia, serif; }
+  button { font-family: inherit; font-size: 14px; cursor: pointer; }
+  button:disabled { opacity: .3; cursor: not-allowed; }
+  .header { background: #2c2416; color: #f5f0e8; padding: 20px 24px 0; border-bottom: 4px solid #7eb890; }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; opacity: .6; text-transform: uppercase; margin-bottom: 4px; }
+  .week { font-size: 20px; font-weight: bold; margin-bottom: 16px; }
+  .tab { padding: 10px 22px; border: 0; border-radius: 6px 6px 0 0; background: transparent; color: #c4b898; }
+  .tab.on { background: #f5f0e8; color: #2c2416; font-weight: bold; }
+  .page { max-width: 600px; margin: 0 auto; padding: 20px 24px 40px; }
+  .row { display: flex; justify-content: space-between; font-size: 13px; color: #6b5a3e; margin-bottom: 6px; }
+  .bar { height: 6px; background: #e0d8c8; border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+  .bar div { height: 100%; background: #7eb890; transition: width .3s; }
+  .note { background: #fff8e8; border: 1px solid #e8c547; border-left-width: 4px; border-radius: 4px; padding: 10px 14px; font-size: 14px; line-height: 1.6; color: #5a4530; margin-bottom: 20px; }
+  .store { font-size: 17px; font-weight: bold; margin: 24px 0 10px; }
+  .cat { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #806f4e; margin: 14px 0 4px; padding-bottom: 6px; border-bottom: 1px solid #d4c9b0; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #ede6d6; cursor: pointer; font-size: 15px; }
+  .item input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #5a9e6f; }
+  .item .n { flex: 1; }
+  .item .q { font-size: 13px; color: #806f4e; text-align: right; }
+  .item.done { opacity: .45; }
+  .item.done .n { text-decoration: line-through; }
+  .reset { margin-top: 16px; padding: 8px 16px; border: 1px solid #d4c9b0; background: none; border-radius: 4px; color: #806f4e; }
+  .strip { display: flex; overflow-x: auto; background: #2c2416; }
+  .day { flex: 0 0 auto; padding: 10px 16px; border: 0; background: transparent; color: #c4b898; }
+  .day.on { color: #2c2416; font-weight: bold; }
+  .day small { display: block; font-size: 11px; }
+  .title { display: flex; gap: 16px; margin-bottom: 16px; }
+  .title .emoji { font-size: 48px; line-height: 1; }
+  .title h1 { font-size: 20px; line-height: 1.25; margin: 0 0 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .chip { border-radius: 20px; padding: 4px 10px; font-size: 12px; }
+  .badge { background: #e8e0d0; color: #6b5a3e; }
+  .veg { background: #EAF3DE; color: #3B6D11; } .protein { background: #E6F1FB; color: #185FA5; }
+  .carbs { background: #FAEEDA; color: #854F0B; } .fats { background: #FBEAF0; color: #993556; }
+  .rows { margin-bottom: 16px; border-top: 1px solid #d4c9b0; }
+  .lrow { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #d4c9b0; font-size: 14px; line-height: 1.5; }
+  .lrow b { flex: 0 0 130px; } .lrow span { min-width: 0; overflow-wrap: anywhere; } .lrow a { color: #185FA5; }
+  .rtabs { display: flex; border-bottom: 2px solid #d4c9b0; margin-bottom: 12px; }
+  .rtab { padding: 10px 24px; border: 0; border-bottom: 3px solid transparent; background: none; color: #806f4e; margin-bottom: -2px; }
+  .rtab.on { color: #2c2416; font-weight: bold; }
+  .line { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #e8e0d0; font-size: 15px; line-height: 1.5; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .num { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; }
+  .nav { display: flex; justify-content: space-between; margin-top: 28px; }
+  .nav button { padding: 10px 20px; border: 2px solid #d4c9b0; background: none; border-radius: 4px; color: #2c2416; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// The next line is the only one to replace. See template_schema.md.
+const PLAN = "__PLAN_DATA__";
+
+const COLORS = { mon: "#7eb8a4", tue: "#c47e3e", wed: "#9b8fc4", thu: "#d4894e", fri: "#7eb8a4", sat: "#e8c547", sun: "#6ea8d4" };
+const PLATE = { veg: "vegetables ½", protein: "protein ¼", carbs: "carbs ¼", fats: "fats" };
+const ROWS = [["breakfast", "🍳 Breakfast"], ["salad", "🥗 Salad"], ["side", "🍽 Side"], ["snack", "🎒 School snack"], ["childNote", "🧒 Child's portion"]];
+const KEY = "meal-plan-" + PLAN.start;
+const state = { view: "shopping", day: 0, tab: "ingr" };
+let checked = {};
+try { checked = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(checked)); } catch (e) {} }
+
+// Builds an element. Text always goes in as text, never as HTML.
+function el(tag, props, ...kids) {
+  const node = Object.assign(document.createElement(tag), props);
+  node.append(...kids.flat().filter(k => k !== null && k !== undefined && k !== false && k !== ""));
+  return node;
+}
+function set(changes) { Object.assign(state, changes); render(); }
+function section(text) { return el("div", { className: "cat" }, text.replace(/─/g, "").trim()); }
+
+function shoppingView() {
+  const keys = [], list = [];
+  let store = null;
+  PLAN.shopping.forEach(group => {
+    if (group.store && group.store !== store) list.push(el("div", { className: "store" }, group.store));
+    store = group.store;
+    list.push(section(group.cat));
+    group.items.forEach(item => {
+      const key = [group.store, group.cat, item.n].join("|");
+      keys.push(key);
+      const box = el("input", { type: "checkbox", checked: !!checked[key], onchange: () => { checked[key] = box.checked; save(); render(); } });
+      list.push(el("label", { className: "item" + (checked[key] ? " done" : "") }, box,
+        el("span", { className: "n" }, item.n),
+        el("span", { className: "q" }, [item.q, item.p].filter(Boolean).join(" · "))));
+    });
+  });
+  const done = keys.filter(k => checked[k]).length;
+  const fill = el("div");
+  fill.style.width = (keys.length ? done / keys.length * 100 : 0) + "%";
+  return el("div", { className: "page" },
+    el("div", { className: "row" },
+      el("span", {}, `Checked: ${done} of ${keys.length}`),
+      el("span", {}, keys.length && done === keys.length ? "✓ All done!" : `${keys.length - done} remaining`)),
+    el("div", { className: "bar" }, fill),
+    PLAN.budget && el("div", { className: "note" }, "💰 " + PLAN.budget),
+    list,
+    done > 0 && el("button", { className: "reset", onclick: () => { checked = {}; save(); render(); } }, "Reset all"));
+}
+
+function recipesView() {
+  const d = PLAN.days[state.day];
+  const color = colorOf(d);
+  const strip = el("div", { className: "strip" }, PLAN.days.map((x, i) => {
+    const b = el("button", { className: "day" + (i === state.day ? " on" : ""), onclick: () => set({ day: i, tab: "ingr" }) },
+      el("small", {}, x.label), x.emoji);
+    if (i === state.day) b.style.background = colorOf(x);
+    return b;
+  }));
+  const rows = ROWS.filter(([k]) => d[k]).map(([k, label]) => el("div", { className: "lrow" }, el("b", {}, label), el("span", {}, d[k])));
+  const links = [].concat(d.source || []).filter(u => /^https?:\/\//i.test(u));
+  if (links.length) rows.push(el("div", { className: "lrow" }, el("b", {}, "🔗 Source"), el("span", {}, links.map(u =>
+    el("a", { href: u, target: "_blank", rel: "noopener" }, u.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0] + " ")))));
+  let n = 0;
+  const lines = d[state.tab].map(x => {
+    if (x.sec) { n = 0; return section(x.sec); }
+    const mark = state.tab === "ingr" ? el("span", { className: "dot" }) : el("span", { className: "num" }, String(++n));
+    mark.style.background = color;
+    return el("div", { className: "line" }, mark, el("span", {}, x.i || x.s));
+  });
+  const tabs = el("div", { className: "rtabs" }, [["ingr", "Ingredients"], ["steps", "Method"]].map(([t, label]) => {
+    const b = el("button", { className: "rtab" + (t === state.tab ? " on" : ""), onclick: () => set({ tab: t }) }, label);
+    if (t === state.tab) b.style.borderBottomColor = color;
+    return b;
+  }));
+  return el("div", {}, strip, el("div", { className: "page" },
+    el("div", { className: "title" }, el("div", { className: "emoji" }, d.emoji),
+      el("div", {}, el("h1", {}, d.title),
+        el("div", { className: "chips" },
+          d.time && el("span", { className: "chip badge" }, "⏱ " + d.time),
+          d.servings && el("span", { className: "chip badge" }, "🍽 " + d.servings)))),
+    d.plate && el("div", { className: "chips" }, Object.keys(PLATE).filter(k => d.plate[k]).map(k =>
+      el("span", { className: "chip " + k }, el("b", {}, PLATE[k] + ": "), d.plate[k]))),
+    rows.length > 0 && el("div", { className: "rows" }, rows),
+    tabs, lines,
+    d.tip && el("div", { className: "note", style: "margin-top:20px" }, "💡 " + d.tip),
+    el("div", { className: "nav" },
+      el("button", { disabled: state.day === 0, onclick: () => set({ day: state.day - 1, tab: "ingr" }) }, "← Previous"),
+      el("button", { disabled: state.day === PLAN.days.length - 1, onclick: () => set({ day: state.day + 1, tab: "ingr" }) }, "Next →"))));
+}
+
+function colorOf(d) { return COLORS[d.label.slice(0, 3).toLowerCase()] || "#7eb8a4"; }
+
+function render() {
+  document.title = "Meal Plan: " + PLAN.week;
+  document.getElementById("app").replaceChildren(
+    el("div", { className: "header" },
+      el("div", { className: "eyebrow" }, "Weekly Meal Plan"),
+      el("div", { className: "week" }, PLAN.week),
+      [["shopping", "🛒 Shopping"], ["recipes", "📖 Recipes"]].map(([v, label]) =>
+        el("button", { className: "tab" + (v === state.view ? " on" : ""), onclick: () => set({ view: v }) }, label))),
+    state.view === "shopping" ? shoppingView() : recipesView());
+}
+render();
+</script>
+</body>
+</html>
