@@ -2,6 +2,7 @@
 
 Tell Claude who you cook for, and it plans your week: meals that suit everyone, recipes, and a shopping list for your stores and budget. You get it all as an interactive page with a tap-to-check shopping list.
 
+- Gives you one recipe at a time too, and helps while you cook
 - Plans any mix of breakfast, lunch, dinner, and school snacks
 - Takes allergies, diets, and dislikes into account
 - Builds balanced lunches and dinners using the Harvard Plate
@@ -58,6 +59,21 @@ Say **"Plan meals for this week"**. The first time, Claude asks short questions 
 
 If Claude answers without using the skill, say **"Use the weekly-meal-planner skill"**. In Claude Code you can also type `/weekly-meal-planner`.
 
+## Just want one recipe?
+
+You don't need a clever prompt or any setup. Say what you feel like, and Claude asks up to three quick questions, then makes an interactive recipe page: change the servings, tick off ingredients, and cook one step at a time with **timers**, signs that each step is done, and fixes for what usually goes wrong.
+
+- "I want to make lasagna"
+- "What can I cook with eggs, rice and half a cabbage?"
+- "Something chocolatey, under 30 minutes"
+
+Then keep going in the same chat:
+
+- "Make a recipe page for Monday's dinner" (from your weekly plan)
+- "I only have a 20 cm tin" or "I don't have cream"
+- "My sauce split, what do I do?" (you can send a photo)
+- "Save this to our favorites"
+
 ## Things to say
 
 - "Plan dinners for next week, 30 minutes max"
@@ -86,6 +102,7 @@ In the Claude app, Claude gives you the updated recipe file. Add it to your Proj
 | `history.md` | The last four weeks of meals |
 | `recipes/` | Your own recipes |
 | `plans/` | Your weekly plans. Open them in any browser |
+| `cook/` | Recipe pages with timers. Open them in any browser |
 
 In Claude Code, they are in the `meal-planner` folder in your home folder. In the Claude app, they are in your Project. You can edit them or ask Claude to. They are not part of the skill, so updating it doesn't touch them.
 
@@ -101,4 +118,5 @@ In Claude Code, they are in the `meal-planner` folder in your home folder. In th
 | Claude doesn't use the skill | Check it's switched on (app) or that `~/.claude/skills/weekly-meal-planner/SKILL.md` exists (Claude Code), then start a new chat |
 | The app rejects the zip | Use the link above. GitHub's green **Code → Download ZIP** button gives a differently named folder, which may be rejected |
 | Claude asks setup questions again (app) | Start the chat inside your Project and check that `family.md` and `preferences.md` are in its files |
+| A timer doesn't ring | Tap the page once and turn your sound up. Keep the page open: it can't ring if it is closed, and phones may silence it when the screen is locked |
 | Checkmarks disappear | Open the plan in your browser. They are saved per browser, on that device |

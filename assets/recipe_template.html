@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recipe</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: #f5f0e8; color: #2c2416; font-family: Georgia, serif; padding-bottom: 120px; }
+  button { font-family: inherit; font-size: 15px; cursor: pointer; color: inherit; }
+  button:disabled { opacity: .3; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #185FA5; outline-offset: 2px; }
+  .header { background: #2c2416; color: #f5f0e8; padding: 20px 24px 0; border-bottom: 4px solid #c47e3e; }
+  .inner, .page { max-width: 640px; margin: 0 auto; }
+  .page { padding: 20px 24px; }
+  .htop { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .emoji { font-size: 44px; line-height: 1; }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; }
+  .desc { font-size: 14px; line-height: 1.5; color: #d9cdb4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .chip { border-radius: 20px; padding: 4px 10px; font-size: 13px; background: #4a3f2a; color: #f5f0e8; }
+  .tab { padding: 10px 18px; border: 0; border-radius: 6px 6px 0 0; background: transparent; color: #c4b898; }
+  .tab.on { background: #f5f0e8; color: #2c2416; font-weight: bold; }
+  .note { background: #fff8e8; border: 1px solid #e8c547; border-left-width: 4px; border-radius: 4px; padding: 10px 14px; font-size: 15px; line-height: 1.6; color: #5a4530; margin: 0 0 16px; }
+  .note.alert { background: #FBEAF0; border-color: #993556; color: #7a2743; }
+  .serv { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 16px; }
+  .serv button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #d4c9b0; background: #fff; font-size: 20px; }
+  .sec { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #806f4e; margin: 18px 0 4px; padding-bottom: 6px; border-bottom: 1px solid #d4c9b0; }
+  .item { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 9px 0; border-bottom: 1px solid #e8e0d0; font-size: 16px; line-height: 1.4; cursor: pointer; }
+  .item input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #5a9e6f; }
+  .item.done { opacity: .45; text-decoration: line-through; }
+  .muted { color: #806f4e; font-size: 14px; }
+  .li { padding: 9px 0; border-bottom: 1px solid #e8e0d0; line-height: 1.6; font-size: 16px; }
+  .primary { display: block; width: 100%; margin-top: 22px; padding: 15px; border: 0; border-radius: 8px; background: #c47e3e; color: #2c2416; font-size: 17px; font-weight: bold; }
+  .bar { height: 6px; background: #e0d8c8; border-radius: 3px; overflow: hidden; margin: 8px 0 18px; }
+  .bar div { height: 100%; background: #c47e3e; }
+  .step h2 { font-size: 22px; line-height: 1.3; margin: 0 0 10px; }
+  .step .txt { font-size: 20px; line-height: 1.6; margin: 0 0 16px; }
+  .ready { background: #EAF3DE; color: #3B6D11; border-radius: 6px; padding: 10px 14px; font-size: 16px; line-height: 1.5; margin-bottom: 14px; }
+  .timers { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .tbtn { padding: 12px 18px; border-radius: 24px; border: 2px solid #c47e3e; background: #fff; font-weight: bold; }
+  .nav { display: flex; gap: 10px; margin-top: 20px; }
+  .nav button { flex: 1; padding: 15px; border: 2px solid #d4c9b0; background: none; border-radius: 8px; font-size: 16px; }
+  .nav .next { background: #c47e3e; border-color: #c47e3e; font-weight: bold; }
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; background: #2c2416; color: #f5f0e8; padding: 0 16px; max-height: 45vh; overflow-y: auto; }
+  .trow { display: flex; align-items: center; gap: 8px; max-width: 640px; margin: 0 auto; padding: 8px 0; border-top: 1px solid #4a3f2a; }
+  .trow .lbl { flex: 1; min-width: 0; font-size: 15px; overflow-wrap: anywhere; }
+  .trow .clock { font-size: 21px; font-weight: bold; font-variant-numeric: tabular-nums; }
+  .trow button { min-height: 40px; padding: 6px 11px; border-radius: 6px; border: 1px solid #806f4e; background: none; color: #f5f0e8; font-size: 14px; }
+  .trow.over { background: #993556; margin: 0 -16px; padding: 8px 16px; max-width: none; }
+  a { color: #185FA5; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="dock" class="dock" aria-live="polite"></div>
+<script>
+// The next line is the only one to replace. See recipe_schema.md.
+const RECIPE = "__RECIPE_DATA__";
+
+const KEY = "recipe-" + RECIPE.title + "-" + JSON.stringify(RECIPE).length;  // an updated recipe starts fresh
+let state = { tab: "ingr", step: 0, servings: RECIPE.servings, checked: {}, timers: [] };
+try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+if (state.step >= RECIPE.steps.length) state.step = 0;
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+// Builds an element. Text always goes in as text, never as HTML.
+function el(tag, props, ...kids) {
+  const node = Object.assign(document.createElement(tag), props);
+  node.append(...kids.flat(Infinity).filter(k => k !== null && k !== undefined && k !== false && k !== ""));
+  return node;
+}
+
+// ── Amounts ──
+const byId = {};
+RECIPE.ingredients.forEach(x => { if (x.id) byId[x.id] = x; });
+const FRACTIONS = [[0, ""], [.25, "¼"], [.333, "⅓"], [.5, "½"], [.667, "⅔"], [.75, "¾"], [1, ""]];
+function number(v, unit) {
+  if (/^(g|ml)$/i.test(unit || "")) return String(v >= 100 ? Math.round(v / 5) * 5 : v >= 10 ? Math.round(v) : Math.round(v * 2) / 2);
+  if (/^(kg|l|lb|oz|cm)$/i.test(unit || "")) return String(Math.round(v * 100) / 100);
+  if (v < .2) return "a pinch of";
+  let whole = Math.floor(v), best = FRACTIONS[0];
+  FRACTIONS.forEach(f => { if (Math.abs(v - whole - f[0]) < Math.abs(v - whole - best[0])) best = f; });
+  if (best[0] === 1) whole++;
+  return (whole || !best[1] ? whole : "") + best[1];
+}
+function amount(x, share) {
+  if (x.q === undefined || x.q === null) return "";
+  const v = x.q * (x.fixed ? 1 : state.servings / RECIPE.servings) * (share || 1);
+  const n = number(v, x.u);
+  return n === "a pinch of" ? n : n + (x.u ? " " + x.u : "");
+}
+function full(x, share) { return [amount(x, share), x.n].filter(Boolean).join(" "); }
+function text(s) {
+  return String(s).replace(/\{([\w-]+)(?::([\d.]+))?\}/g, (m, id, share) => byId[id] ? full(byId[id], share ? +share : 1) : id);
+}
+
+// ── Timers: stored as end times, so they stay right if the screen sleeps or the page reloads ──
+let audio = null, lock = null;
+function unlockAudio() { try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch (e) {} }
+function beep() {
+  try { [0, .3, .6].forEach(t => { const o = audio.createOscillator(), g = audio.createGain(); o.frequency.value = 880; g.gain.value = .25; o.connect(g); g.connect(audio.destination); o.start(audio.currentTime + t); o.stop(audio.currentTime + t + .18); }); } catch (e) {}
+  try { navigator.vibrate([300, 150, 300]); } catch (e) {}
+}
+async function keepAwake() { try { lock = await navigator.wakeLock.request("screen"); } catch (e) {} }
+document.addEventListener("visibilitychange", () => { if (!document.hidden && state.tab === "cook") keepAwake(); });
+function left(t) { return t.paused !== null ? t.paused : Math.ceil((t.end - Date.now()) / 1000); }
+function clock(s) {
+  const a = Math.abs(s), h = Math.floor(a / 3600), m = Math.floor(a % 3600 / 60), p = n => String(n).padStart(2, "0");
+  return (s < 0 ? "+" : "") + (h ? h + ":" + p(m) : m) + ":" + p(a % 60);
+}
+function startTimer(label, minutes) {
+  unlockAudio(); keepAwake();
+  state.timers.push({ id: Date.now() + Math.random(), label, end: Date.now() + minutes * 60000, paused: null, rang: 0 });
+  save(); drawDock();
+}
+function changeTimer(id, fn) {
+  unlockAudio();
+  state.timers = state.timers.filter(t => t.id !== id || fn(t) !== false);
+  save(); drawDock();
+}
+function drawDock() {
+  document.getElementById("dock").replaceChildren(...state.timers.map(t => {
+    const s = left(t), over = s <= 0;
+    return el("div", { className: "trow" + (over ? " over" : "") },
+      el("span", { className: "lbl" }, over ? "⏰ Time's up: " + t.label : t.label),
+      el("span", { className: "clock" }, clock(s)),
+      !over && el("button", { onclick: () => changeTimer(t.id, x => { if (x.paused !== null) { x.end = Date.now() + x.paused * 1000; x.paused = null; } else x.paused = left(x); }) }, t.paused !== null ? "Resume" : "Pause"),
+      el("button", { onclick: () => changeTimer(t.id, x => { if (x.paused !== null) x.paused += 60; else x.end = Math.max(x.end, Date.now()) + 60000; x.rang = 0; }) }, "+1 min"),
+      el("button", { ariaLabel: "Stop timer: " + t.label, onclick: () => changeTimer(t.id, () => false) }, over ? "OK" : "✕"));
+  }));
+}
+function tick() {
+  if (!state.timers.length) return;
+  state.timers.forEach(t => {
+    const s = left(t);
+    // Rings when done, then every 15 seconds for a minute.
+    if (s <= 0 && t.rang < 5 && -s >= t.rang * 15) { t.rang = Math.floor(-s / 15) + 1; beep(); save(); }
+  });
+  drawDockTimes();
+}
+function drawDockTimes() {
+  const rows = document.querySelectorAll("#dock .trow");
+  let redraw = rows.length !== state.timers.length;
+  state.timers.forEach((t, i) => {
+    if (redraw) return;
+    const s = left(t);
+    if ((s <= 0) !== rows[i].classList.contains("over")) redraw = true;
+    else rows[i].querySelector(".clock").textContent = clock(s);
+  });
+  if (redraw) drawDock();
+}
+setInterval(tick, 500);
+
+// ── Views ──
+function set(changes) { Object.assign(state, changes); save(); render(); }
+function go(i) { if (i >= 0 && i < RECIPE.steps.length) { set({ step: i }); window.scrollTo(0, 0); } }
+
+function ingredientsView() {
+  return [
+    RECIPE.alert && el("div", { className: "note alert" }, "⚠️ " + RECIPE.alert),
+    RECIPE.assumed && el("div", { className: "note" }, RECIPE.assumed),
+    el("div", { className: "serv" },
+      el("button", { ariaLabel: "Fewer servings", disabled: state.servings <= 1, onclick: () => set({ servings: state.servings - 1 }) }, "−"),
+      el("span", {}, el("b", {}, String(state.servings)), " " + (RECIPE.unit || (state.servings === 1 ? "serving" : "servings"))),
+      el("button", { ariaLabel: "More servings", disabled: state.servings >= 50, onclick: () => set({ servings: state.servings + 1 }) }, "+")),
+    state.servings !== RECIPE.servings && el("div", { className: "note" }, RECIPE.scaleNote || "Amounts are adjusted. Pan size and cooking times may change too, so go by the signs that each step is done."),
+    RECIPE.ingredients.map((x, i) => {
+      if (x.sec) return el("div", { className: "sec" }, x.sec);
+      const box = el("input", { type: "checkbox", checked: !!state.checked[i], onchange: () => { state.checked[i] = box.checked; set({}); } });
+      return el("label", { className: "item" + (state.checked[i] ? " done" : "") }, box,
+        el("span", {}, el("b", {}, amount(x)), (amount(x) ? " " : "") + x.n + (x.prep ? ", " + x.prep : ""), x.swap && el("div", { className: "muted" }, "Swap: " + x.swap)));
+    }),
+    RECIPE.before && [el("div", { className: "sec" }, "Before you start"), RECIPE.before.map(b => el("div", { className: "li" }, text(b)))],
+    el("button", { className: "primary", onclick: () => { unlockAudio(); keepAwake(); set({ tab: "cook" }); window.scrollTo(0, 0); } }, state.step ? "Continue cooking" : "Start cooking"),
+  ];
+}
+function cookView() {
+  const s = RECIPE.steps[state.step], n = RECIPE.steps.length;
+  const fill = el("div"); fill.style.width = (state.step + 1) / n * 100 + "%";
+  return el("div", { className: "step" },
+    el("div", { className: "muted" }, `Step ${state.step + 1} of ${n}`), el("div", { className: "bar" }, fill),
+    s.title && el("h2", {}, s.title),
+    el("p", { className: "txt" }, text(s.text)),
+    s.timers && el("div", { className: "timers" }, s.timers.map(t => el("button", { className: "tbtn", onclick: () => startTimer(t.label, t.min) }, `⏱ ${t.label}: ${clock(Math.round(t.min * 60))}`))),
+    s.ready && el("div", { className: "ready" }, el("b", {}, "✓ Ready when: "), text(s.ready)),
+    s.tip && el("div", { className: "note" }, "💡 " + text(s.tip)),
+    el("div", { className: "nav" },
+      el("button", { disabled: state.step === 0, onclick: () => go(state.step - 1) }, "← Back"),
+      state.step < n - 1 ? el("button", { className: "next", onclick: () => go(state.step + 1) }, "Next →")
+        : el("button", { className: "next", onclick: () => set({ tab: "help", step: 0, checked: {} }) }, "Done 🎉")),
+    state.step < n - 1 && el("p", { className: "muted" }, "Next: " + (RECIPE.steps[state.step + 1].title || text(RECIPE.steps[state.step + 1].text))));
+}
+function helpView() {
+  const links = (RECIPE.sources || []).filter(x => /^https?:\/\//i.test(x.url));
+  return [
+    RECIPE.problems && [el("div", { className: "sec" }, "Where it usually goes wrong"), RECIPE.problems.map(p => el("div", { className: "li" }, el("b", {}, p.what + " "), text(p.fix)))],
+    RECIPE.leftovers && [el("div", { className: "sec" }, "Leftovers"), el("div", { className: "li" }, RECIPE.leftovers)],
+    links.length > 0 && [el("div", { className: "sec" }, "Compared with"), links.map(x => el("div", { className: "li" }, el("a", { href: x.url, target: "_blank", rel: "noopener" }, x.name || x.url)))],
+    el("p", { className: "muted" }, "Stuck? Go back to the chat and tell Claude what you see, or send a photo."),
+  ];
+}
+function render() {
+  document.title = RECIPE.title;
+  document.getElementById("app").replaceChildren(
+    el("div", { className: "header" }, el("div", { className: "inner" },
+      el("div", { className: "htop" }, el("div", { className: "emoji" }, RECIPE.emoji || "🍳"),
+        el("div", {}, el("h1", {}, RECIPE.title), RECIPE.desc && el("div", { className: "desc" }, RECIPE.desc))),
+      el("div", { className: "chips" }, (RECIPE.chips || []).map(c => el("span", { className: "chip" }, c))),
+      [["ingr", "🛒 Ingredients"], ["cook", "👩‍🍳 Cook"], ["help", "🛟 Help"]].map(([t, label]) =>
+        el("button", { className: "tab" + (t === state.tab ? " on" : ""), onclick: () => { if (t === "cook") { unlockAudio(); keepAwake(); } set({ tab: t }); } }, label)))),
+    el("div", { className: "page" }, ...[state.tab === "ingr" ? ingredientsView() : state.tab === "cook" ? cookView() : helpView()].flat(Infinity).filter(Boolean)));
+}
+document.addEventListener("keydown", e => {
+  if (state.tab !== "cook") return;
+  if (e.key === "ArrowRight") go(state.step + 1);
+  if (e.key === "ArrowLeft") go(state.step - 1);
+});
+render(); drawDock();
+</script>
+</body>
+</html>
