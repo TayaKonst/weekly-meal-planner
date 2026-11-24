@@ -2,6 +2,7 @@
 
 Tell Claude who you cook for, and it plans your week: meals that suit everyone, recipes, and a shopping list for your stores and budget. You get it all as an interactive page with a tap-to-check shopping list.
 
+- Gives you one recipe at a time too, and helps while you cook
 - Plans any mix of breakfast, lunch, dinner, and school snacks
 - Takes allergies, diets, and dislikes into account
 - Builds balanced lunches and dinners using the Harvard Plate
@@ -57,6 +58,21 @@ If Claude Code was already open, run `/reload-skills` or restart it.
 Say **"Plan meals for this week"**. The first time, Claude asks short questions one at a time (10 to 16, depending on your answers): who you cook for, allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Tap an answer or type your own. Then it makes your first plan.
 
 If Claude answers without using the skill, say **"Use the weekly-meal-planner skill"**. In Claude Code you can also type `/weekly-meal-planner`.
+
+## Just want one recipe?
+
+You don't need a clever prompt or any setup. Say what you feel like, and Claude asks up to three quick questions, then gives you a recipe with exact amounts, how to tell each step is done, and what usually goes wrong.
+
+- "I want to make lasagna"
+- "What can I cook with eggs, rice and half a cabbage?"
+- "Something chocolatey, under 30 minutes"
+
+Then keep going in the same chat:
+
+- "Cook it with me step by step"
+- "I only have a 20 cm tin" or "I don't have cream"
+- "My sauce split, what do I do?" (you can send a photo)
+- "Save this to our favorites"
 
 ## Things to say
 
