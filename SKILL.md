@@ -186,37 +186,54 @@ home kitchen, and say what you assumed in one line so that they can change it.
 - If the dish depends on an ingredient someone can't eat, say so first and give a version that works
   without it. If it can't work, offer a similar dish.
 
-### 3. Write it for someone who has never made it
+### 3. Make the recipe page
 
-Answer in chat, in this order:
+Write for someone who has never made it, and deliver the recipe as the interactive page: ingredients with
+adjustable servings, one step at a time, and timers.
 
-1. **Name**, one line on what it's like, then servings, hands-on time, total time and difficulty.
-2. **Ingredients** in the order used, with exact amounts. Use grams or ml plus spoons for small amounts,
-   and the state they should be in ("butter, soft", "onion, finely diced"). Give a starting amount of salt,
-   never only "to taste". Mark what is optional, and add a swap for anything hard to find.
-3. **Before you start:** equipment and pan size, oven temperature (conventional, fan and °F), and what to
-   take out of the fridge or prepare first.
-4. **Steps**, numbered, one action each, with amounts repeated, heat level, time **and how to tell it's
-   done** by look, smell, sound or touch. For meat, poultry, fish and eggs, give the safe internal
-   temperature and a sign that doesn't need a thermometer.
-5. **Where it usually goes wrong:** the 2–3 most likely mistakes for this dish, how to avoid each, and how
-   to rescue it.
-6. **Leftovers:** how long it keeps, and how to reheat or freeze it.
+1. Read `assets/recipe_schema.md`.
+2. Copy `assets/recipe_template.html` with a shell command, don't retype it. Claude Code:
+   `~/meal-planner/cook/<recipe-name>.html`. Claude app: the folder for files the user can download.
+3. Replace `"__RECIPE_DATA__"` with the recipe, then check that the placeholder is gone and that every
+   `{id}` exists in the ingredients.
+4. Show it: in Claude Code, open it as in Output Format, step 6, **as a separate command** after the page
+   exists. If opening fails or is refused, the page is still fine: give its location. If another command is
+   refused, try smaller single commands or the file tools before giving up. In the Claude app, give the user this one
+   file and no others, and make no more tool calls in that turn. If you can't create files, make it an HTML
+   artifact. If that isn't possible either, write the recipe in chat with the same content.
 
-Keep it tight. Don't add stories, and explain a cooking term the first time you use it.
+What goes in:
+
+- **Ingredients** in the order used, with exact amounts: grams or ml, spoons for small amounts, and the
+  state they should be in ("soft", "finely diced"). Give a starting amount of salt, never only "to taste".
+  Mark what is optional, and add a swap for anything hard to find.
+- **Before you start:** equipment and pan size, oven temperature (conventional, fan and °F), and what to
+  take out of the fridge or prepare first.
+- **Steps:** one action each, with amounts, heat level, a timer for every wait, **and how to tell it's done**
+  by look, smell, sound or touch. For meat, poultry, fish and eggs, give the safe internal temperature and
+  a sign that doesn't need a thermometer. Explain a cooking term the first time you use it.
+- **Order:** put steps in the order a cook really does them, so that timers can run while the next step starts.
+- **Problems:** the 2–3 most likely mistakes for this dish, how to avoid each, and how to rescue it.
+- **Leftovers:** how long it keeps, and how to reheat or freeze it.
+
+Keep the chat message short: "Your recipe is ready" and how to open it (in the app, click the recipe's
+card, then **Cook** for step-by-step with timers), what you assumed, allergy notes and labels to check, and
+sources. Don't repeat the whole recipe.
 
 ### 4. Stay with them
 
-End with one short line offering: cook it together step by step, change something, or save it to favorites.
+End with one short line offering: help while cooking, change something, or save it to favorites.
 
-- **Step by step:** give one step at a time, with its amounts and its sign of doneness, then wait. Say
+- **Step by step in chat,** if they ask for that rather than the page: give one step at a time, with its amounts and its sign of doneness, then wait. Say
   which step it is ("Step 3 of 8"). Continue on "next". Start the next thing early when it has to overlap.
 - **Something is wrong:** ask for what you need to know, one question or a photo, then give the most likely
   cause and what to do **right now**. If it can't be saved, say so. If food may be unsafe (undercooked
   poultry, left out too long), say so plainly and don't suggest tasting it.
-- **Change something:** give new amounts for the whole recipe, and say what changes in taste, texture, time
+- **Change something:** update the page (the page itself can change servings, except where pan size or
+  baking time matters), and say what changes in taste, texture, time
   or pan size.
-- **Save:** follow Recipes. Include notes from the user's experience ("less salt next time").
+- **A dish from the weekly plan:** make its recipe page when they want to cook it.
+- **Save:** follow Recipes. The collection keeps the recipe as text, not as a page. Include notes from the user's experience ("less salt next time").
 - **Afterwards,** if they tell you how it went, explain the likely reason and what to change next time.
 
 ---
@@ -333,7 +350,7 @@ For a few dinner ideas, just answer in chat.
 4. Replace `"__PLAN_DATA__"` in the copy with this week's data, then check that the placeholder is gone.
 5. Update `history.md`.
 6. **Show the meal plan, and nothing else.** The plan must be what the user sees open.
-   - Claude Code: open it with `open` on macOS, `start ""` on Windows (cmd) or `xdg-open` on Linux.
+   - Claude Code: open it, as a separate command after the page exists, with `open` on macOS, `start ""` on Windows (cmd) or `xdg-open` on Linux.
    - Claude app: the plan is the **only** file you give the user at this point. Don't give them
      `family.md`, `preferences.md`, `history.md` or recipe files together with it, before it or after
      it. If you can't create files, make the plan an HTML artifact.
