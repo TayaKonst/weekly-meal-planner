@@ -1,7 +1,5 @@
 # Family Food Preferences
 
-<!-- Template. Claude fills this in during setup. One section per person. -->
-
 ## Shared Favorites (everyone likes)
 - [Dishes everyone likes]
 
@@ -29,7 +27,7 @@
 - [Add favorites here]
 
 ### Dislikes / avoid
-- [Add anything to avoid — e.g. "spicy food", "fish", "meat on the bone"]
+- [Add anything to avoid]
 
 ### Allergies and dietary restrictions
 - None / [e.g. no pork, no shellfish]
@@ -39,10 +37,10 @@
 ## Child 1 (school age) — optional, remove if not applicable
 
 ### Likes
-- [Add favorites — kids often like: nuggets, pasta, rice, mild flavors]
+- [Add favorites here]
 
 ### Dislikes / avoid
-- [e.g. "anything green", "mushrooms", "spicy food"]
+- [Add anything to avoid]
 
 ### Allergies and dietary restrictions
 - None / [e.g. nut allergy]

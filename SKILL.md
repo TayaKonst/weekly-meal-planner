@@ -19,50 +19,94 @@ Below, these names always mean the files in the user's data location:
 - **Claude Code:** the folder `meal-planner` in the user's home directory (`~/meal-planner/`).
 - **Claude app (web, desktop, mobile):** files attached to the chat or in the Project's knowledge,
   or a folder the user has connected. Files you create in a chat's own workspace don't carry over
-  to the next chat, so whenever you create or change a data file, give it to the user to download
-  and ask them to add it to their Project, replacing the old copy. Don't say it is saved until they have.
+  to the next chat. Work on data files in your private working folder, **not** in the folder for
+  files the user can download: anything put there may open in front of the meal plan. Hand them over
+  only as described in Output Format, step 7, or when the user asks. Don't say they are saved until
+  the user has added them to their Project. Don't create or hand over empty recipe files; create each
+  one when its first recipe is saved.
 
 Read `family.md`, `preferences.md` and `history.md` first, every time. If `family.md` or
-`preferences.md` is missing, run First-Time Setup.
+`preferences.md` can't be found here, **carry on in this chat**. Never stop and tell the user to go to a
+Project or another chat:
+
+- Normally, start First-Time Setup right away with question 1.
+- Only if you have reason to think the user already has these files elsewhere, first ask one question, the same way as in setup: "I can't see your meal planner files
+  here. How do you want to start?" Set up here · I'll attach my files. Then go on with their choice.
+  For "attach", wait for the files. If they don't come, offer to set up here.
+
+### What you remember about the user
+
+Memory from other chats may shorten setup, but never use it silently. If it has anything useful for
+meal planning, make this the first setup question: list what you remember in a few short lines, then ask
+"Is this right?" Yes, use it · Change something · Start from scratch.
+
+- **Yes:** skip the questions it answers, and write those facts to the data files.
+- **Change something:** ask what to change, then treat the corrected list as confirmed.
+- **Start from scratch:** use none of it, and ask every question.
+
+Always ask question 2 (allergies) as well, even if memory already covers it. Anything from memory that
+wasn't in the list doesn't go into the plan. Show the list in chat if it is too long for the question.
 
 ---
 
 ## First-Time Setup
 
-### Step 1 — Open questions
+### Step 1 — Ask one question at a time
 
-Ask these in one ordinary chat message, so the user can type freely. Say that short answers are fine.
+Ask each question separately, wait for the answer, then ask the next. Never send several questions
+together.
 
-1. Who are you cooking for? (names or nicknames, and children's ages) Do any children take snacks or a
-   packed lunch to school, and does the school have food rules, such as nut-free?
-2. Does anyone have allergies, dietary restrictions, fasting days, or strong dislikes?
-3. What country are you in, and which stores do you shop at?
-4. What's your grocery budget, per week or per month, and in what currency?
+- Use the tool that shows clickable options (`AskUserQuestion` in Claude Code, or its equivalent in the
+  Claude app), with **one question per call** and 2–4 options.
+- The user must always be able to write their own answer. `AskUserQuestion` adds "Other" by itself. If
+  your tool doesn't, make the last option "Something else (I'll type it)".
+- If there is no such tool, ask in chat: one question per message, with numbered options and
+  "or write your own".
+- **Never announce a question without asking it.** Don't write an introduction such as "I need a few
+  answers first" and stop. Ask in the same turn, and until setup is finished end every turn with a
+  question the user can see.
+- If the tool fails, closes, or returns no answer, ask the same question again in chat with numbered
+  options. If the user chose to skip it, go on with a sensible default, but a skipped allergy question
+  isn't a "no": ask it again in chat.
+- Skip anything the user has already told you or has confirmed from memory. If an answer needs details, ask for them next, also as
+  one question. Keep questions short.
 
-If the answer about allergies is missing or unclear, ask again before planning anything.
+| # | Question | Options |
+|---|---|---|
+| 1 | Who are you cooking for? | Just me · Me and my partner · Family with children |
+| 1a | *With children:* How many adults and children? | 2 adults + 1 child · 2 adults + 2 children · 2 adults + 3 children · 1 adult + 1 child |
+| 1b | *With children:* How old are they? (multi-select) | Under 3 · 3–5 · 6–12 · 13 or older |
+| 1c | *School age:* Do they take food to school? | Snacks · Packed lunch · Both · No |
+| 1d | *Takes food to school:* Does the school have food rules? | No rules · Nut-free · Not sure |
+| 2 | Any food allergies? (multi-select) | None · Peanuts or tree nuts · Milk or eggs · Gluten, fish or other |
+| 2a | *Any allergy:* Who has it, and to what exactly? | Suggest likely answers from 1 and 2 |
+| 3 | Any special diet? (multi-select) | None · Vegetarian or vegan · Halal or kosher · Fasting days |
+| 3a | *Any diet:* Who follows it, and how? | Suggest likely answers |
+| 4 | Anything someone really dislikes? (multi-select) | Nothing · Fish or seafood · Mushrooms · Spicy food |
+| 5 | Which country are you in? | United States · United Kingdom · Canada · Australia |
+| 6 | Where do you shop? (multi-select) | 3–4 popular grocery stores in that country |
+| 7 | What's your weekly grocery budget? | 3 amounts in local currency that suit the household · No fixed budget |
+| 8 | Which meals should I plan? (multi-select) | Breakfast · Lunch · Dinner |
+| 9 | What food do you enjoy? (multi-select) | Italian / Mediterranean · Asian · Comfort food · Mexican / Middle Eastern |
+| 10 | Do you want to use your own recipes? | Use your ideas · Share recipes now · Add them later |
 
-### Step 2 — Choices
+Use "you", "partner", "child (8)" and so on unless the user gives names. Never skip question 2, and
+never guess an allergen: if 2a is still unclear, ask again before planning anything.
 
-Use `AskUserQuestion` if it is available; otherwise ask in chat. All in one call:
-
-1. **Which meals should I plan?** (multi-select) Breakfast · Lunch · Dinner · School snacks
-2. **Which food do you enjoy?** (multi-select) Italian / Mediterranean · Asian · Comfort food ·
-   Mexican / Middle Eastern
-3. **Do you want to use your own recipes?** Use your ideas · Share recipes now · Add them later
-
-### Step 3 — Write the files
+### Step 2 — Write the files
 
 Before planning, create all of these in the user's data location:
 
 - `family.md` and `preferences.md`, following `templates/family.md` and `templates/preferences.md`.
-  Use only what the user told you. Remove unused sections and all placeholder text.
+  Use only what the user told you. Remove unused sections, all placeholder text in
+  brackets, and any HTML comments.
 - `history.md`, copied from `templates/history.md`.
-- `recipes/mains.md`, `soups.md`, `salads.md`, `desserts.md` (desserts, baking, drinks) and
+- Except in the Claude app: `recipes/mains.md`, `soups.md`, `salads.md`, `desserts.md` (desserts, baking, drinks) and
   `others.md` (everything else), each with a heading and the line
   `<!-- Start each recipe with: ## Recipe Name -->`.
 
 If the user chose to share recipes now, ask for them and save them (see Recipes).
-Then tell the user where their files are, and that they can add favorite recipes any time by sending
+In Claude Code, tell the user where their files are. Everywhere, tell them that they can add favorite recipes any time by sending
 you a link, text, photo or file. Go on with their original request. If they only
 asked for setup, suggest saying "plan this week".
 
@@ -125,6 +169,8 @@ plan from your own knowledge.
 
 ### Use what's in the fridge
 1. Before planning a week, ask what is already in the fridge and pantry, unless the user has said.
+   Ask it on its own, the same way as in setup: Nothing special · Pantry basics (rice, pasta, oil,
+   spices) · I'll list what I have.
    Use it first (e.g. a cauliflower becomes a side that same day), and leave it off the shopping list.
 2. If the user has a fixed amount of an ingredient, check that it is enough and say how much more to buy.
    For meat, allow about 150 g (5 oz) per adult at dinner, less for a child, and about 100 g (3.5 oz)
@@ -142,7 +188,7 @@ If a child takes lunch to school the next day:
 
 ### When the user rejects a dish
 Replace it right away, in the plan file and shopping list too. Log it with the date and reason
-("didn't eat well last time", "not this week") under `## Rejected dishes` in `history.md`, and don't
+("didn't eat well last time", "not this week") as `date — dish — reason` under `## Rejected dishes` in `history.md`, and don't
 suggest it again soon. Keep this section when you remove old weeks; drop entries that no longer apply.
 
 ### No-repeat rule (check history.md first)
@@ -150,7 +196,8 @@ Read `history.md` before picking dishes. Do not repeat any main dish that appear
 in the last 2 weeks. Soups can repeat if it has been more than 1 week.
 Also avoid ingredients the family has eaten a lot recently (e.g. chicken four times last week).
 After outputting the final plan, update `history.md`:
-- Add a section for this week above the older weeks
+- Add a section for this week above the older weeks, below `## Rejected dishes`:
+  `## Week of 2026-11-23`, then one bold line per type (`**Dinners:**`, `**Salads:**`, …)
 - List every planned dish by meal type, plus the soup, salads and snacks
 - Remove the oldest entry if there are more than 4 weeks recorded
 Keep the file tidy — it's read every session.
@@ -196,7 +243,7 @@ If "School snacks" is listed in the meal structure in `preferences.md` AND the f
 Deliver a weekly plan as the interactive HTML app. For a quick question (one recipe, a few dinner
 ideas), just answer in chat.
 
-1. **Fit the budget before building the page.** The weekly limit is the weekly budget, or the monthly
+1. **Fit the budget before building the page**, unless there is no fixed budget. The weekly limit is the weekly budget, or the monthly
    budget ÷ 4.3. Add up the whole shopping list, pantry staples included. While the total is over the
    limit, make it cheaper and add it up again: swap expensive dishes (salmon, shrimp, beef) for eggs,
    beans, tofu or chicken, reuse the same ingredients across days, and drop sauces, cheeses and spices
@@ -207,11 +254,26 @@ ideas), just answer in chat.
    location, using the first day of the plan as the date. Copy it with a shell command; don't retype it.
    In the Claude app, copy it to the place for files the user can download.
 4. Replace `"__PLAN_DATA__"` in the copy with this week's data, then check that the placeholder is gone.
-5. Open it: `open` on macOS, `start ""` on Windows (cmd), `xdg-open` on Linux. In the Claude app, give
-   the user the file. If you can't create files there, make the app an HTML artifact instead.
-6. Update `history.md`.
-7. Tell the user where the file is, the estimated cost against the budget, and anything to
-   double-check (allergen labels, substitutions). Prices are estimates; say so.
+5. Update `history.md`.
+6. **Show the meal plan, and nothing else.** The plan must be what the user sees open.
+   - Claude Code: open it with `open` on macOS, `start ""` on Windows (cmd) or `xdg-open` on Linux.
+   - Claude app: the plan is the **only** file you give the user at this point. Don't give them
+     `family.md`, `preferences.md`, `history.md` or recipe files together with it, before it or after
+     it. If you can't create files, make the plan an HTML artifact.
+   - Start your message with "Your meal plan is ready" and how to open it: in the app, click
+     **Meal plan** to see recipes and the tap-to-check shopping list. Then give the estimated cost
+     against the budget and anything to double-check (allergen labels, substitutions). Prices are
+     estimates; say so.
+7. **Claude app only: end your turn right there.** The last lines of the message offer, in plain text:
+   "To keep your family's settings for next time, reply **Save my settings**. Without them, the next
+   chat starts from zero." Don't use the clickable question tool for this: its answer continues the
+   same turn, and the files would then open in place of the plan. After giving the plan, make no more
+   tool calls in that turn.
+
+   Only in a later turn, when the user asks to save, give the changed data files that have real
+   content. Ask the user to add them to their Project, replacing old copies, and say that the meal plan
+   is still in the earlier message. After the first time, offer only the files that changed, such as
+   `history.md`.
 
 ### What goes in each day
 

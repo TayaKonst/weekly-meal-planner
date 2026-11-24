@@ -28,7 +28,7 @@ Choose the one you use:
 5. Make sure **weekly-meal-planner** is switched on.
 6. Create a **Project** called "Meal planning" and start your chats there.
 
-**Why a Project?** The app doesn't carry files over from one chat to the next. After setup and after each weekly plan, Claude gives you updated files such as `family.md` and `history.md`. Add them to your Project's files, replacing the old copies, so the next chat knows your family and what you ate.
+**Why a Project?** The app doesn't carry files over from one chat to the next. After your meal plan, reply **Save my settings** and Claude gives you files such as `family.md` and `history.md`. Add them to your Project's files, replacing the old copies, so the next chat knows your family and what you ate.
 
 ### Claude Code
 
@@ -54,7 +54,7 @@ If Claude Code was already open, run `/reload-skills` or restart it.
 
 ## First use
 
-Say **"Plan meals for this week"**. The first time, Claude asks who you cook for, about allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Then it makes your first plan.
+Say **"Plan meals for this week"**. The first time, Claude asks short questions one at a time (10 to 16, depending on your answers): who you cook for, allergies and dislikes, where you shop, your budget, which meals to plan, and what food you like. Tap an answer or type your own. Then it makes your first plan.
 
 If Claude answers without using the skill, say **"Use the weekly-meal-planner skill"**. In Claude Code you can also type `/weekly-meal-planner`.
 
